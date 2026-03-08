@@ -1,5 +1,5 @@
 import '../styles/ExerciseSession.css'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { FaCheck } from 'react-icons/fa'
 import { useEffect, useState } from 'react'
 
@@ -8,13 +8,14 @@ export default function ExerciseSession({ Template=[] }) {
     const [currentSession, setCurrentSession] = useState([])
     useEffect(() => {
         setCurrentSession([
+        ...Template,
         {
             name: "Bench Press",
             sets: [
                 {
                     lbs: 10,
                     reps: 20,
-                    finished: false,
+                    finished: true,
                 },
                 {
                     lbs: 140,
@@ -26,6 +27,23 @@ export default function ExerciseSession({ Template=[] }) {
     ])
     }, [])
 
+    function addExercise() {
+        setCurrentSession((prev) => {
+            return [
+                ...prev, 
+                {
+                    name: "New Exercise",
+                    sets: [
+                        {
+                            lbs: "",
+                            reps: ""
+                        }
+                    ]
+                }
+            ]
+        })
+    }
+
     
     return (
         <div className="container">
@@ -34,18 +52,25 @@ export default function ExerciseSession({ Template=[] }) {
                     <div className="row">
                         <h4>{exercise.name}</h4>
                         <form action="">
-                            <label htmlFor="weight">lbs</label>
-                            <input type="number" value={exercise.sets[0].lbs} id="weight" />
-                            <label htmlFor="repetition">reps</label>
-                            <input type="number" value={exercise.sets[0].reps} id="repetition"/>
-                            <button onFocus={exercise.sets[0].finished} className='check-btn' type='button'><FaCheck size={10}/></button>
+                            {exercise.sets.map((set, index) => {
+                                 return (
+                                    <div key={index} className='set-row'>
+                                        <label htmlFor="weight">lbs</label>
+                                        <input type="number" onChange={(e) => set.lbs = e.target.value} value={set.lbs} id="weight" />
+                                        <label htmlFor="repetition">reps</label>
+                                        <input type="number" onChange={(e) => set.reps = e.target.value} value={set.reps} id="repetition"/>
+                                        <button className='check-btn' type='button'><FaCheck color={set.finished ? "white" : "grey"} size={10}/></button>
+                                    </div>
+                                 )
+                            })}
+                           
                         </form>
-                        <button className='add-set-btn'>Add Set</button>
+                        <button  className='add-set-btn'>Add Set</button>
                     </div>
                 )
             })}
             
-            <button>Add Exercise</button>
+            <button onClick={() => addExercise()}>Add Exercise</button>
             <div className='bottom-row'>
                 <button>Finish Workout</button>
                 <button onClick={() => navigate(-1)}>Discard Session</button>
