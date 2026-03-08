@@ -1,48 +1,66 @@
 import '../styles/ExerciseSession.css'
 import { useNavigate, useParams } from 'react-router-dom'
 import { FaCheck } from 'react-icons/fa'
-import { useEffect, useState } from 'react'
+import { useEffect, useReducer, useState } from 'react'
+
+function sessionReducer(state, action) {
+    switch (action.type) {
+        case 'SET_SESSION':
+            return action.payload
+        default:
+            return state
+    }
+}
 
 export default function ExerciseSession({ Template=[] }) {
     const navigate = useNavigate()
-    const [currentSession, setCurrentSession] = useState([])
-    useEffect(() => {
-        setCurrentSession([
-        ...Template,
-        {
-            name: "Bench Press",
-            sets: [
-                {
-                    lbs: 10,
-                    reps: 20,
-                    finished: true,
-                },
-                {
-                    lbs: 140,
-                    reps: 10,
-                    finished: false,
-                },
-            ]
-        }
-    ])
-    }, [])
+    const [currentSession, dispatch] = useReducer(sessionReducer, [])
 
-    function addExercise() {
-        setCurrentSession((prev) => {
-            return [
-                ...prev, 
+
+    useEffect(() => {
+        dispatch({
+            type: "SET_SESSION",
+            payload: [
+                ...Template,
                 {
-                    name: "New Exercise",
+                    name: "Bench Press",
                     sets: [
                         {
-                            lbs: "",
-                            reps: ""
-                        }
+                            lbs: 10,
+                            reps: 20,
+                            finished: true,
+                        },
+                        {
+                            lbs: 140,
+                            reps: 10,
+                            finished: true,
+                        },
+                    ]
+                },
+                {
+                    name: "Tricep Pushdown",
+                    sets: [
+                        {
+                            lbs: 10,
+                            reps: 20,
+                            finished: true,
+                        },
+                        {
+                            lbs: 140,
+                            reps: 10,
+                            finished: false,
+                        },
                     ]
                 }
             ]
         })
-    }
+    }, [])
+
+    useEffect(() => {
+        console.log(currentSession)
+    }, [currentSession])
+
+
 
     
     return (
@@ -56,9 +74,9 @@ export default function ExerciseSession({ Template=[] }) {
                                  return (
                                     <div key={index} className='set-row'>
                                         <label htmlFor="weight">lbs</label>
-                                        <input type="number" onChange={(e) => set.lbs = e.target.value} value={set.lbs} id="weight" />
+                                        <input type="number" onChange={(e) => updateLbs(e)} value={set.lbs} id="weight" />
                                         <label htmlFor="repetition">reps</label>
-                                        <input type="number" onChange={(e) => set.reps = e.target.value} value={set.reps} id="repetition"/>
+                                        <input type="number" onChange={(e) => set.reps = updateReps(e)} value={set.reps} id="repetition"/>
                                         <button className='check-btn' type='button'><FaCheck color={set.finished ? "white" : "grey"} size={10}/></button>
                                     </div>
                                  )
@@ -70,7 +88,7 @@ export default function ExerciseSession({ Template=[] }) {
                 )
             })}
             
-            <button onClick={() => addExercise()}>Add Exercise</button>
+            <button>Add Exercise</button>
             <div className='bottom-row'>
                 <button>Finish Workout</button>
                 <button onClick={() => navigate(-1)}>Discard Session</button>
