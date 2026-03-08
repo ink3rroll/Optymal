@@ -1,11 +1,12 @@
-import {Routes, Router} from "react-router-dom"
+import { useState } from 'react'
 import './styles/App.css'
+import { AppRouter } from './router/AppRouter'
 
 function App() {
 
   return (
     <>
-     Hello, world!
+      <AppRouter />
     </>
   )
 }
