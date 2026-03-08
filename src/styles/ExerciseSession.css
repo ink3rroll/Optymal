@@ -1,0 +1,48 @@
+.container {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    max-width: 600px;
+    align-items: center;
+    min-height: 80vh;
+}
+
+input {
+    width: 40px;
+    height: 20px;
+    border: transparent;
+    border-radius: 2px;
+    padding-inline: 5px;
+    margin: 10px;
+}
+
+input:focus {
+    outline: transparent;
+}
+
+.row {
+    border-radius: 10px;
+    margin-bottom: 10px;
+    padding: 10px;
+    width: 100%;
+    background-color: rgb(47, 46, 46);
+}
+
+.row .add-set-btn {
+    background-color: transparent;
+    border-radius: 10px;
+    border: solid;
+    border-width: 1px;
+    border-color: rgba(10, 100, 100, 0.9);
+}
+
+
+.check-btn {
+    width: fit-content;
+    align-content: center;
+    background-color: transparent;
+}
+
+.bottom-row {
+    position: sticky;
+}
