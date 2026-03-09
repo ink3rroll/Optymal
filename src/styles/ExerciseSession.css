@@ -35,8 +35,18 @@ input {
 }
 
 .delete-modal .card {
+    max-width: 250px;
     height: fit-content;
     width: fit-content;
+    background-color: #181717;
+    padding: 30px;
+    border-radius: 10px;
+}
+
+.delete-modal .card button{
+    background-color: transparent;
+    border: solid;
+    border-width: 1px;
 }
 
 

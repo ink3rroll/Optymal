@@ -3,6 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { FaCheck } from 'react-icons/fa'
 import { CgTrash } from 'react-icons/cg'
 import { useEffect, useReducer, useState } from 'react'
+import useConfirm from '../hooks/Confirm'
 
 function sessionReducer(state, action) {
     switch (action.type) {
@@ -100,8 +101,7 @@ function sessionReducer(state, action) {
 
 export default function ExerciseSession({ Template=[] }) {
     const navigate = useNavigate()
-    const [openDeleteModal, setOpenDeleteModal] = useState(false)
-    const [deleteModalName, setDeleteModalName] = useState("")
+    const { confirm, ConfirmDialog } = useConfirm()
     const [currentSession, dispatch] = useReducer(sessionReducer, [])
 
     function addExercise() {
@@ -147,13 +147,17 @@ export default function ExerciseSession({ Template=[] }) {
         })
     }
 
-    function deleteExercise(index) {
-        setOpenDeleteModal(true)
-        setDeleteModalName(currentSession[index].name)
+    async function deleteExercise(index) {
+        const ok = await confirm("Are you sure you want to delete this exercise? ")
+
+        if (!ok) return
+        
         dispatch({
             type: 'DELETE_EXERCISE',
             exerciseIndex: index
-        })
+            })
+
+        
     }
 
 
@@ -169,19 +173,7 @@ export default function ExerciseSession({ Template=[] }) {
 
     return (
         <div className="container">
-            {openDeleteModal && (
-                <>
-                    <div className='delete-modal'>
-                        <div className='card'>
-                            <p>Are you sure you want to DELETE {deleteModalName}?</p>
-                            <div>
-                                <button>Yes</button>
-                                <button onClick={() => setOpenDeleteModal(false)}>No</button>
-                            </div>
-                        </div>
-                    </div>
-                </>
-            )}
+            {ConfirmDialog}
             {currentSession.map((exercise, i) => {
                 return (
                     <div className="row">
