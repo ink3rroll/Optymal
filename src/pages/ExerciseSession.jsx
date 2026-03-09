@@ -4,6 +4,7 @@ import { FaCheck } from 'react-icons/fa'
 import { CgTrash } from 'react-icons/cg'
 import { useEffect, useReducer, useState } from 'react'
 import useConfirm from '../hooks/Confirm'
+import checksound from '../assets/checksound.mp3'
 
 function sessionReducer(state, action) {
     switch (action.type) {
@@ -100,6 +101,7 @@ function sessionReducer(state, action) {
 }
 
 export default function ExerciseSession({ Template=[] }) {
+    const check = new Audio(checksound)
     const navigate = useNavigate()
     const { confirm, ConfirmDialog } = useConfirm()
     const [currentSession, dispatch] = useReducer(sessionReducer, [])
@@ -145,6 +147,7 @@ export default function ExerciseSession({ Template=[] }) {
             exerciseIndex: exerciseIndex,
             setIndex: setIndex,
         })
+        if (!currentSession[exerciseIndex].sets[setIndex].finished) check.play()
     }
 
     async function deleteExercise(index) {
@@ -155,9 +158,15 @@ export default function ExerciseSession({ Template=[] }) {
         dispatch({
             type: 'DELETE_EXERCISE',
             exerciseIndex: index
-            })
+            }) 
+    }
 
-        
+    async function handleDiscardSession() {
+        const ok = await confirm("Are you sure you want to discard this session?")
+
+        if (!ok) return
+
+        navigate(-1)
     }
 
 
@@ -203,7 +212,7 @@ export default function ExerciseSession({ Template=[] }) {
             <button  className='add-exercise-btn' onClick={() => addExercise()}>Add Exercise</button>
             <div className='bottom-row'>
                 <button>Finish Workout</button>
-                <button onClick={() => navigate(-1)}>Discard Session</button>
+                <button onClick={() => handleDiscardSession()}>Discard Session</button>
             </div>
                 
                 
