@@ -1,6 +1,7 @@
 import '../styles/ExerciseSession.css'
 import { useNavigate, useParams } from 'react-router-dom'
 import { FaCheck } from 'react-icons/fa'
+import { CgTrash } from 'react-icons/cg'
 import { useEffect, useReducer, useState } from 'react'
 
 function sessionReducer(state, action) {
@@ -89,6 +90,9 @@ function sessionReducer(state, action) {
                     
                 ) : exercise
             })
+
+        case 'DELETE_EXERCISE':
+            return state.filter((exercise, i) => i !== action.exerciseIndex)
         default:
             return state
     }
@@ -141,6 +145,13 @@ export default function ExerciseSession({ Template=[] }) {
         })
     }
 
+    function deleteExercise(index) {
+        dispatch({
+            type: 'DELETE_EXERCISE',
+            exerciseIndex: index
+        })
+    }
+
 
 
     useEffect(() => {
@@ -148,36 +159,6 @@ export default function ExerciseSession({ Template=[] }) {
             type: "SET_SESSION",
             payload: [
                 ...Template,
-                {
-                    name: "Bench Press",
-                    sets: [
-                        {
-                            lbs: 10,
-                            reps: 20,
-                            finished: true,
-                        },
-                        {
-                            lbs: 140,
-                            reps: 10,
-                            finished: true,
-                        },
-                    ]
-                },
-                {
-                    name: "Tricep Pushdown",
-                    sets: [
-                        {
-                            lbs: 10,
-                            reps: 20,
-                            finished: true,
-                        },
-                        {
-                            lbs: 140,
-                            reps: 10,
-                            finished: false,
-                        },
-                    ]
-                }
             ]
         })
     }, [])
@@ -187,7 +168,10 @@ export default function ExerciseSession({ Template=[] }) {
             {currentSession.map((exercise, i) => {
                 return (
                     <div className="row">
-                        <h4>{exercise.name}</h4>
+                        <div className='exercise-heading'>
+                            <h4>{exercise.name}</h4>
+                            <button onClick={() => deleteExercise(i)} className='delete-exercise'><CgTrash /></button>
+                        </div>
                         <form action="">
                             {exercise.sets.map((set, j) => {
                                  return (
