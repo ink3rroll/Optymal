@@ -1,7 +1,8 @@
 .dashboard-container {
     display: flex;
     flex-direction: column;
-    max-width: 600px;
+    max-width: 300px;
+    width: 90vw;
 }
 
 button {
