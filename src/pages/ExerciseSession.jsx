@@ -100,6 +100,8 @@ function sessionReducer(state, action) {
 
 export default function ExerciseSession({ Template=[] }) {
     const navigate = useNavigate()
+    const [openDeleteModal, setOpenDeleteModal] = useState(false)
+    const [deleteModalName, setDeleteModalName] = useState("")
     const [currentSession, dispatch] = useReducer(sessionReducer, [])
 
     function addExercise() {
@@ -120,8 +122,8 @@ export default function ExerciseSession({ Template=[] }) {
         if (currentSession[exerciseIndex].sets[setIndex].finished) return
         dispatch({
             type: "UPDATE_LBS",
-            exerciseIndex: exerciseIndex,
-            setIndex: setIndex,
+            exerciseIndex,
+            setIndex,
             nextLbs: e.target.value
         })
     }
@@ -130,8 +132,8 @@ export default function ExerciseSession({ Template=[] }) {
         if (currentSession[exerciseIndex].sets[setIndex].finished) return
         dispatch({
             type: "UPDATE_REPS",
-            exerciseIndex: exerciseIndex,
-            setIndex: setIndex,
+            exerciseIndex,
+            setIndex,
             nextReps: e.target.value
         })
     }
@@ -146,6 +148,8 @@ export default function ExerciseSession({ Template=[] }) {
     }
 
     function deleteExercise(index) {
+        setOpenDeleteModal(true)
+        setDeleteModalName(currentSession[index].name)
         dispatch({
             type: 'DELETE_EXERCISE',
             exerciseIndex: index
@@ -165,6 +169,19 @@ export default function ExerciseSession({ Template=[] }) {
 
     return (
         <div className="container">
+            {openDeleteModal && (
+                <>
+                    <div className='delete-modal'>
+                        <div className='card'>
+                            <p>Are you sure you want to DELETE {deleteModalName}?</p>
+                            <div>
+                                <button>Yes</button>
+                                <button onClick={() => setOpenDeleteModal(false)}>No</button>
+                            </div>
+                        </div>
+                    </div>
+                </>
+            )}
             {currentSession.map((exercise, i) => {
                 return (
                     <div className="row">
