@@ -5,25 +5,25 @@ import History from "../pages/History";
 import WorkoutTemplates from "../pages/WorkoutTemplates";
 import MainLayout from "../components/Layout";
 import ExerciseSession from "../pages/ExerciseSession";
+import CurrentSessionProvider from "../providers/CurrentSessionProvider.jsx";
 
 
 export function AppRouter() {
     return (
         <>
-        
-        <BrowserRouter>
-        <MainLayout>
-            <Routes>
-                    <Route path="/" element={<Dashboard />}/>
-                    <Route path="/exercise-list" element={<ExerciseList />}/>
-                    <Route path="/workout-templates" element={<WorkoutTemplates />}/>
-                    <Route path="/history" element={<History />}/>
-
-                    <Route path="/session" element={<ExerciseSession />}/>
-            </Routes>
-        </MainLayout>
-            
-        </BrowserRouter>
+        <CurrentSessionProvider>
+            <BrowserRouter>
+                <MainLayout>
+                    <Routes>
+                            <Route path="/" element={<Dashboard />}/>
+                            <Route path="/exercise-list" element={<ExerciseList />}/>
+                            <Route path="/workout-templates" element={<WorkoutTemplates />}/>
+                            <Route path="/history" element={<History />}/>
+                            <Route path="/session" element={<ExerciseSession />}/>
+                    </Routes>
+                </MainLayout>        
+            </BrowserRouter>
+        </CurrentSessionProvider>
         
         </>
     )

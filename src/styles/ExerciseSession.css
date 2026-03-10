@@ -116,3 +116,24 @@ input:focus {
     background-color: transparent;
 }
 
+.header {
+    display: flex;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding: 10px;
+    background-color: rgb(45, 42, 42);
+    height: 2em;
+    justify-content: space-between;
+    width: 99%;
+}
+
+.header .minimize-session {
+    margin: 10px;
+    width: 10px;
+    height: 10px;
+    background-color: transparent;
+    border: solid;
+    border-width: 1px;
+}
