@@ -183,17 +183,22 @@ export default function ExerciseSession({ Template=[] }) {
     }
 
     useEffect(() => {
-        setCurrentSessionContext(currentSession)
+        setCurrentSessionContext({id: 0, totalTime: 0, currentExercises: currentSession})
     }, [currentSession])
 
+
     useEffect(() => {
-        dispatch({
-            type: "SET_SESSION",
-            payload: [
-                ...Template,
-                ...currentSessionContext,
-            ]
-        })
+        if (currentSessionContext.currentExercises) {
+                dispatch({
+                type: "SET_SESSION",
+                payload: [
+                    ...Template,
+                    ...currentSessionContext.currentExercises,
+                ]
+            })
+        }
+        console.log(currentSessionContext.currentExercises)
+    
     }, [])
 
     
