@@ -114,7 +114,7 @@ export default function ExerciseSession({ Template=[] }) {
     const { confirm, ConfirmDialog } = useConfirm()
     const [currentSession, dispatch] = useReducer(sessionReducer, [])
     const {currentSessionContext, setCurrentSessionContext} = useContext(CurrentSessionContext)
-    const [currentTimer, setCurrentTimer] = useState(setCurrentSessionContext.totalTime ? setCurrentSessionContext.totalTime : 0)
+    const [currentTimer, setCurrentTimer] = useState(currentSessionContext.totalTime !== undefined ? currentSessionContext.totalTime : 0)
 
     console.log(currentSessionContext)
 
@@ -206,16 +206,14 @@ export default function ExerciseSession({ Template=[] }) {
         let interval = null
 
         interval = setInterval(() => {
-            if (currentSessionContext.totalTime !== undefined) {
-                setCurrentTimer(currentSessionContext.totalTime + 1)
-            } else {
-                setCurrentTimer(currentTimer + 1)
-            }
+            setCurrentTimer((prev) => {
+                return prev + 1
+            })
             
         }, 1000)
 
         return () => clearInterval(interval)
-    })
+    }, [])
 
 
     useEffect(() => {
