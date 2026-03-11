@@ -18,7 +18,12 @@ function sessionReducer(state, action) {
                 ...state,
                 {
                     name: action.payload,
-                    sets: []
+                    sets: [
+                        {
+                            lbs: "",
+                            reps: ""
+                        }
+                    ]
                 }
             ]
         case 'ADD_SET': 
@@ -201,7 +206,7 @@ export default function ExerciseSession({ Template=[] }) {
         let interval = null
 
         interval = setInterval(() => {
-            if (currentSessionContext.totalTime !== 0) {
+            if (currentSessionContext.totalTime !== undefined) {
                 setCurrentTimer(currentSessionContext.totalTime + 1)
             } else {
                 setCurrentTimer(currentTimer + 1)
