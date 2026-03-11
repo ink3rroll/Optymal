@@ -109,6 +109,7 @@ export default function ExerciseSession({ Template=[] }) {
     const { confirm, ConfirmDialog } = useConfirm()
     const [currentSession, dispatch] = useReducer(sessionReducer, [])
     const {currentSessionContext, setCurrentSessionContext} = useContext(CurrentSessionContext)
+    const [currentTimer, setCurrentTimer] = useState(setCurrentSessionContext.totalTime ? setCurrentSessionContext.totalTime : 0)
 
     console.log(currentSessionContext)
 
@@ -183,8 +184,33 @@ export default function ExerciseSession({ Template=[] }) {
     }
 
     useEffect(() => {
-        setCurrentSessionContext({id: 0, totalTime: 0, currentExercises: currentSession})
+        setCurrentSessionContext({...currentSessionContext, currentExercises: currentSession})
     }, [currentSession])
+
+    useEffect(()=> {
+        if (currentSessionContext.totalTime > -1 ) {
+            console.log("hello")
+            setCurrentSessionContext({...currentSessionContext, totalTime: currentTimer})
+        } else {
+            setCurrentSessionContext({...currentSessionContext, totalTime: 0})
+        }
+        
+    }, [currentTimer])
+
+    useEffect(() => {
+        let interval = null
+
+        interval = setInterval(() => {
+            if (currentSessionContext.totalTime !== 0) {
+                setCurrentTimer(currentSessionContext.totalTime + 1)
+            } else {
+                setCurrentTimer(currentTimer + 1)
+            }
+            
+        }, 1000)
+
+        return () => clearInterval(interval)
+    })
 
 
     useEffect(() => {
@@ -208,7 +234,7 @@ export default function ExerciseSession({ Template=[] }) {
         <>
             <div className='header'>
                     <button  onClick={() => navigate(-1)} className='minimize-session'><LuMinimize2 size={15}/></button>
-                    <p className='timer'>12:00</p> 
+                    <p className='timer'>{currentSessionContext.totalTime}</p> 
                 </div>
             <div className="container">
                 {ConfirmDialog}
