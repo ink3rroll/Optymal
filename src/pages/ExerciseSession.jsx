@@ -6,7 +6,8 @@ import { useContext, useEffect, useReducer, useState } from 'react'
 import useConfirm from '../hooks/Confirm'
 import checksound from '../assets/checksound.mp3'
 import { CurrentSessionContext } from '../contexts/CurrentSession'
-import { GoChevronDown } from 'react-icons/go'
+import { LuMinimize2 } from 'react-icons/lu'
+import { MdAccessTime } from 'react-icons/md'
 
 function sessionReducer(state, action) {
     switch (action.type) {
@@ -109,6 +110,8 @@ export default function ExerciseSession({ Template=[] }) {
     const [currentSession, dispatch] = useReducer(sessionReducer, [])
     const {currentSessionContext, setCurrentSessionContext} = useContext(CurrentSessionContext)
 
+    console.log(currentSessionContext)
+
     function addExercise() {
         dispatch({
             type: 'ADD_EXERCISE',
@@ -179,28 +182,28 @@ export default function ExerciseSession({ Template=[] }) {
         
     }
 
-
+    useEffect(() => {
+        setCurrentSessionContext(currentSession)
+    }, [currentSession])
 
     useEffect(() => {
         dispatch({
             type: "SET_SESSION",
             payload: [
                 ...Template,
-                ...currentSessionContext
+                ...currentSessionContext,
             ]
         })
     }, [])
 
-    useEffect(() => {
-        setCurrentSessionContext(currentSession)
-    }, [currentSession])
+    
 
 
     return (
         <>
             <div className='header'>
-                    <button className='minimize-session'><GoChevronDown size={15}/></button>
-                    <p>3:40</p>
+                    <button  onClick={() => navigate(-1)} className='minimize-session'><LuMinimize2 size={15}/></button>
+                    <p className='timer'>12:00</p> 
                 </div>
             <div className="container">
                 {ConfirmDialog}
@@ -211,16 +214,16 @@ export default function ExerciseSession({ Template=[] }) {
                         <div className="row">
                             <div className='exercise-heading'>
                                 <h4>{exercise.name}</h4>
-                                <button onClick={() => deleteExercise(i)} className='delete-exercise'><CgTrash /></button>
+                                <button onClick={() => deleteExercise(i)} className='delete-exercise'><CgTrash size={10}/></button>
                             </div>
                             <form action="">
                                 {exercise.sets.map((set, j) => {
                                     return (
                                         <div key={j} className='set-row' style={{ backgroundColor: set.finished ? "#66635a" : "transparent", borderRadius: "2px" }}>
                                             <label htmlFor="weight">lbs</label>
-                                            <input type="number" onChange={(e) => updateLbs(e, i, j)} value={set.lbs} id="weight" />
+                                            <input type="number"  disabled={set.finished} onChange={(e) => updateLbs(e, i, j)} value={set.lbs} id="weight" />
                                             <label htmlFor="repetition">reps</label>
-                                            <input type="number" onChange={(e) => updateReps(e, i, j)} value={set.reps} id="repetition"/>
+                                            <input type="number" disabled={set.finished} onChange={(e) => updateReps(e, i, j)} value={set.reps} id="repetition"/>
                                             <button onClick={() => toggleSet(i, j)} className='check-btn' type='button'><FaCheck size={12}/></button>
                                         </div>
                                     )
