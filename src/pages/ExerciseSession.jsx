@@ -116,9 +116,8 @@ export default function ExerciseSession({ Template=[] }) {
     const {currentSessionContext, setCurrentSessionContext} = useContext(CurrentSessionContext)
     const [currentTimer, setCurrentTimer] = useState(currentSessionContext.startTime ? Date.now() - currentSessionContext
         .startTime : 0)
-    // const [currentTimer, setCurrentTimer] = useState(currentSessionContext.totalTime !== undefined ? currentSessionContext.totalTime : 0)
 
-    console.log(currentSessionContext)
+
 
     function addExercise() {
         dispatch({
@@ -237,7 +236,6 @@ export default function ExerciseSession({ Template=[] }) {
                 ]
             })
         }
-        console.log(currentSessionContext.currentExercises)
     
     }, [])
 
@@ -256,7 +254,7 @@ export default function ExerciseSession({ Template=[] }) {
                 
                 {currentSession.map((exercise, i) => {
                     return (
-                        <div className="row">
+                        <div key={i} className="row">
                             <div className='exercise-heading'>
                                 <h4>{exercise.name}</h4>
                                 <button onClick={() => deleteExercise(i)} className='delete-exercise'><CgTrash size={10}/></button>
