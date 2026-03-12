@@ -114,7 +114,9 @@ export default function ExerciseSession({ Template=[] }) {
     const { confirm, ConfirmDialog } = useConfirm()
     const [currentSession, dispatch] = useReducer(sessionReducer, [])
     const {currentSessionContext, setCurrentSessionContext} = useContext(CurrentSessionContext)
-    const [currentTimer, setCurrentTimer] = useState(currentSessionContext.totalTime !== undefined ? currentSessionContext.totalTime : 0)
+    const [currentTimer, setCurrentTimer] = useState(currentSessionContext.startTime ? Date.now() - currentSessionContext
+        .startTime : 0)
+    // const [currentTimer, setCurrentTimer] = useState(currentSessionContext.totalTime !== undefined ? currentSessionContext.totalTime : 0)
 
     console.log(currentSessionContext)
 
@@ -184,36 +186,45 @@ export default function ExerciseSession({ Template=[] }) {
                 
             ]
         })
+
+        setCurrentSessionContext({})
         navigate(-1)
         
     }
+
+    function formatDuration(totalSeconds) {
+    totalSeconds = Math.floor(totalSeconds);
+
+    const hours = Math.floor(totalSeconds / 3600);
+    const minutes = Math.floor((totalSeconds % 3600) / 60);
+    const seconds = totalSeconds % 60;
+
+    const formattedHours = String(hours).padStart(2, '0');
+    const formattedMinutes = String(minutes).padStart(2, '0');
+    const formattedSeconds = String(seconds).padStart(2, '0');
+
+    return hours === 0 ? `${formattedMinutes}:${formattedSeconds}` : `${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
+}
 
     useEffect(() => {
         setCurrentSessionContext({...currentSessionContext, currentExercises: currentSession})
     }, [currentSession])
 
-    useEffect(()=> {
-        if (currentSessionContext.totalTime > -1 ) {
-            console.log("hello")
-            setCurrentSessionContext({...currentSessionContext, totalTime: currentTimer})
-        } else {
-            setCurrentSessionContext({...currentSessionContext, totalTime: 0})
-        }
-        
-    }, [currentTimer])
 
     useEffect(() => {
+        if (currentSessionContext.startTime) return
+        setCurrentSessionContext({...currentSessionContext, startTime: Date.now()})
+    }, [])
+
+    useEffect(() => {
+        if (!currentSessionContext.startTime) return
         let interval = null
 
         interval = setInterval(() => {
-            setCurrentTimer((prev) => {
-                return prev + 1
-            })
-            
+            setCurrentTimer(Date.now() - currentSessionContext.startTime)
         }, 1000)
+    }, [currentSessionContext.startTime])
 
-        return () => clearInterval(interval)
-    }, [])
 
 
     useEffect(() => {
@@ -237,7 +248,7 @@ export default function ExerciseSession({ Template=[] }) {
         <>
             <div className='header'>
                     <button  onClick={() => navigate(-1)} className='minimize-session'><LuMinimize2 size={15}/></button>
-                    <p className='timer'>{currentSessionContext.totalTime}</p> 
+                    <p className='timer'>{formatDuration(currentTimer/1000)}</p> 
                 </div>
             <div className="container">
                 {ConfirmDialog}
