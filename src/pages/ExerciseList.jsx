@@ -1,7 +1,12 @@
+import '../styles/ExerciseList.css'
+
 export default function ExerciseList() {
     return (
         <>
-            Exercise List Page
+        <input className="search-bar" type="text" placeholder="Search exercise, body part, muscle group..." />
+            <div className="container">
+                
+            </div>
         </>
     )
 }
