@@ -20,6 +20,54 @@ export default function ExerciseList() {
                         <p>Back | Machine</p>
                     </button>
                 </div>
+                <div className='exercise-row'>
+                    <button>
+                        <h4>Lat Pulldown</h4>
+                        <p>Back | Machine</p>
+                    </button>
+                </div>
+                <div className='exercise-row'>
+                    <button>
+                        <h4>Lat Pulldown</h4>
+                        <p>Back | Machine</p>
+                    </button>
+                </div>
+                <div className='exercise-row'>
+                    <button>
+                        <h4>Lat Pulldown</h4>
+                        <p>Back | Machine</p>
+                    </button>
+                </div>
+                <div className='exercise-row'>
+                    <button>
+                        <h4>Lat Pulldown</h4>
+                        <p>Back | Machine</p>
+                    </button>
+                </div>
+                <div className='exercise-row'>
+                    <button>
+                        <h4>Lat Pulldown</h4>
+                        <p>Back | Machine</p>
+                    </button>
+                </div>
+                <div className='exercise-row'>
+                    <button>
+                        <h4>Lat Pulldown</h4>
+                        <p>Back | Machine</p>
+                    </button>
+                </div>
+                <div className='exercise-row'>
+                    <button>
+                        <h4>Lat Pulldown</h4>
+                        <p>Back | Machine</p>
+                    </button>
+                </div>
+                <div className='exercise-row'>
+                    <button>
+                        <h4>Lat Pulldown</h4>
+                        <p>Back | Machine</p>
+                    </button>
+                </div>
             </div>
         </>
     )
