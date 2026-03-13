@@ -1,8 +1,58 @@
 import '../styles/ExerciseList.css'
 import { Header } from '../components/Header'
 import { CgAddR } from 'react-icons/cg'
+import { useState } from 'react'
 
 export default function ExerciseList() {
+
+    const [exercisesList, setExercisesList] = useState([
+        {
+            name: "Lat Pulldown",
+            musclePart: "Back",
+            type: "Machine"
+        },
+
+        {
+            name: "Bench Press",
+            musclePart: "Chest",
+            type: "Barbell"
+        },
+
+        {
+            name: "Lateral Raises",
+            musclePart: "Shoulders",
+            type: "Cable"
+        },
+        {
+            name: "Shoulder Press",
+            musclePart: "Shoulders",
+            type: "Machine"
+        },
+        {
+            name: "Stiff Leg Deadlift",
+            musclePart: "Hamstrings",
+            type: "Barbell"
+        },
+        {
+            name: "Wide Grip Rows",
+            musclePart: "Upper Back",
+            type: "Machine"
+        },
+        {
+            name: "Lateral Raises",
+            musclePart: "Shoulders",
+            type: "Cable"
+        },
+        {
+            name: "Lateral Raises",
+            musclePart: "Shoulders",
+            type: "Cable"
+        },
+    ])
+
+    function handleAddExercise() {
+
+    }
     return (
         <>
         <Header children={
@@ -14,60 +64,17 @@ export default function ExerciseList() {
             }/>
         
             <div className="container">
-                <div className='exercise-row'>
-                    <button>
-                        <h4>Lat Pulldown</h4>
-                        <p>Back | Machine</p>
-                    </button>
-                </div>
-                <div className='exercise-row'>
-                    <button>
-                        <h4>Lat Pulldown</h4>
-                        <p>Back | Machine</p>
-                    </button>
-                </div>
-                <div className='exercise-row'>
-                    <button>
-                        <h4>Lat Pulldown</h4>
-                        <p>Back | Machine</p>
-                    </button>
-                </div>
-                <div className='exercise-row'>
-                    <button>
-                        <h4>Lat Pulldown</h4>
-                        <p>Back | Machine</p>
-                    </button>
-                </div>
-                <div className='exercise-row'>
-                    <button>
-                        <h4>Lat Pulldown</h4>
-                        <p>Back | Machine</p>
-                    </button>
-                </div>
-                <div className='exercise-row'>
-                    <button>
-                        <h4>Lat Pulldown</h4>
-                        <p>Back | Machine</p>
-                    </button>
-                </div>
-                <div className='exercise-row'>
-                    <button>
-                        <h4>Lat Pulldown</h4>
-                        <p>Back | Machine</p>
-                    </button>
-                </div>
-                <div className='exercise-row'>
-                    <button>
-                        <h4>Lat Pulldown</h4>
-                        <p>Back | Machine</p>
-                    </button>
-                </div>
-                <div className='exercise-row'>
-                    <button>
-                        <h4>Lat Pulldown</h4>
-                        <p>Back | Machine</p>
-                    </button>
-                </div>
+                {exercisesList.map((exercise) => {
+                    return (
+                        <div className='exercise-row'>
+                            <button>
+                                <h4>{exercise.name}</h4>
+                                <p>{exercise.type} | {exercise.musclePart}</p>
+                            </button>
+                        </div>
+                    )
+                })}
+                
             </div>
         </>
     )

@@ -33,5 +33,25 @@
 
 .exercise-row button {
     height: fit-content;
+    padding-left: 10px;
+    margin: 0px;
+    padding: 5px;
+    
     background-color: transparent;
+    border-radius: 2px;
+    width: 100%;
+    text-align: left;
+    /* border: solid;
+    border-width: .5px; */
+}
+
+.exercise-row button h4 {
+    font-style: normal;
+    margin: 0px;
+}
+
+.exercise-row button p {
+    font-style: normal;
+    font-weight: 50;
+    margin: 15px;
 }
