@@ -54,7 +54,14 @@ export default function ExerciseList() {
     console.log(exerciseAddInfo)
 
     function handleAddExercise() {
-        setExerciseAddInfo({})
+        if (exerciseAddInfo.name == "" || exerciseAddInfo.musclePart == "" || exerciseAddInfo.type == "") return
+        setExercisesList([...exercisesList, {
+            name: exerciseAddInfo.name,
+            musclePart: exerciseAddInfo.musclePart,
+            type: exerciseAddInfo.type
+        }])
+        setExerciseAddInfo({name: "", musclePart: "", type: ""})
+        setAppearModal(false)
     }
     return (
         <>
@@ -76,7 +83,7 @@ export default function ExerciseList() {
                             <input value={exerciseAddInfo.musclePart} onChange={(e) => setExerciseAddInfo({...exerciseAddInfo, musclePart: e.target.value})} id="muscle-part" type="text" placeholder='Muscle part (eg. Chest, Back, etc.)'/>
                             <label htmlFor="name">Type</label>
                             <input value={exerciseAddInfo.type} onChange={(e) => setExerciseAddInfo({...exerciseAddInfo, type: e.target.value})} id="type" type="text" placeholder='Type (eg. Machine, Barbell)'/>
-                            <button className='confirm-add' disabled={exerciseAddInfo.name == "" || exerciseAddInfo.musclePart == "" || exerciseAddInfo.type == ""} >Add Exercise</button>
+                            <button onClick={() => handleAddExercise()} className='confirm-add' disabled={exerciseAddInfo.name == "" || exerciseAddInfo.musclePart == "" || exerciseAddInfo.type == ""} >Add Exercise</button>
                             <button  onClick={() => setAppearModal(false)}>Cancel</button>
                         </div>
                     </div>
