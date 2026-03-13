@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 import { RiArtboardFill, RiKnifeLine, RiArchive2Line, RiTimeLine } from 'react-icons/ri'
 import { useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
-import '../styles/Navbar.css'
+import '../styles/NavBar.css'
 export default function Navbar() {
     const location = useLocation()
     return (
