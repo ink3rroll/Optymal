@@ -7,7 +7,6 @@ import useConfirm from '../hooks/Confirm'
 import checksound from '../assets/checksound.mp3'
 import { CurrentSessionContext } from '../contexts/CurrentSession'
 import { LuMinimize2 } from 'react-icons/lu'
-import { MdAccessTime } from 'react-icons/md'
 import { Header } from '../components/Header'
 
 function sessionReducer(state, action) {
