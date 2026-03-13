@@ -5,7 +5,7 @@
     display: flex;
     flex-direction: column;
     max-width: 400px;
-    min-height: 90vh;
+    min-height: 80vh;
     width: 90%;
     justify-self: center;
 }
@@ -31,7 +31,7 @@ input {
     background-color: rgba(54, 61, 61, 0.7);
     position: fixed;
     z-index: 2;
-    height: 100vh;
+    height: 100%;
     width: 100%;
     align-content: center;
     justify-items: center;
