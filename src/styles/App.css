@@ -16,7 +16,6 @@
   align-items: center;
   height: fit-content;
   overscroll-behavior: none;
-  min-height: 100dvh;
 }
 
 html {
