@@ -10,7 +10,6 @@
 #root {
   display: flex;
   width: 100%;
-  min-height: 80vh;
   text-align: center;
   justify-items: center;
   justify-content: center;
