@@ -4,7 +4,8 @@ import { CgAddR } from 'react-icons/cg'
 import { useState } from 'react'
 
 export default function ExerciseList() {
-
+    const [appearModal, setAppearModal] = useState(false)
+    const [exerciseAddInfo, setExerciseAddInfo] = useState({name: "", musclePart: "", type: ""})
     const [exercisesList, setExercisesList] = useState([
         {
             name: "Lat Pulldown",
@@ -50,18 +51,37 @@ export default function ExerciseList() {
         },
     ])
 
-    function handleAddExercise() {
+    console.log(exerciseAddInfo)
 
+    function handleAddExercise() {
+        setExerciseAddInfo({})
     }
     return (
         <>
         <Header children={
             <>
                 <input className="search-bar" type="text" placeholder="Search exercise, body part, muscle group..." />
-                <button className='add-exercise'><CgAddR/></button>
+                <button onClick={() => setAppearModal(true)} className='add-exercise-btn'><CgAddR/></button>
             </>
             
             }/>
+
+            { appearModal && (
+                <>
+                    <div className='add-exercise-modal' onClick={() => setAppearModal(false)}>
+                        <div className='form' onClick={(e) => e.stopPropagation()}>
+                            <label htmlFor="name">Exercise Name</label>
+                            <input value={exerciseAddInfo.name} onChange={(e) => setExerciseAddInfo({...exerciseAddInfo, name: e.target.value})} id="name" type="text" placeholder='Exercise name (eg. Bench Press)' />
+                            <label htmlFor="name">Muscle Part</label>
+                            <input value={exerciseAddInfo.musclePart} onChange={(e) => setExerciseAddInfo({...exerciseAddInfo, musclePart: e.target.value})} id="muscle-part" type="text" placeholder='Muscle part (eg. Chest, Back, etc.)'/>
+                            <label htmlFor="name">Type</label>
+                            <input value={exerciseAddInfo.type} onChange={(e) => setExerciseAddInfo({...exerciseAddInfo, type: e.target.value})} id="type" type="text" placeholder='Type (eg. Machine, Barbell)'/>
+                            <button className='confirm-add' disabled={exerciseAddInfo.name == "" || exerciseAddInfo.musclePart == "" || exerciseAddInfo.type == ""} >Add Exercise</button>
+                            <button  onClick={() => setAppearModal(false)}>Cancel</button>
+                        </div>
+                    </div>
+                </>
+            ) }
         
             <div className="container">
                 {exercisesList.map((exercise) => {
