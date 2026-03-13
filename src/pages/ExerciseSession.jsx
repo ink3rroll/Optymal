@@ -8,6 +8,7 @@ import checksound from '../assets/checksound.mp3'
 import { CurrentSessionContext } from '../contexts/CurrentSession'
 import { LuMinimize2 } from 'react-icons/lu'
 import { MdAccessTime } from 'react-icons/md'
+import { Header } from '../components/Header'
 
 function sessionReducer(state, action) {
     switch (action.type) {
@@ -244,10 +245,13 @@ export default function ExerciseSession({ Template=[] }) {
 
     return (
         <>
-            <div className='header'>
-                    <button  onClick={() => navigate(-1)} className='minimize-session'><LuMinimize2 size={15}/></button>
-                    <p className='timer'>{formatDuration(currentTimer/1000)}</p> 
-                </div>
+        <Header children={
+            <>
+            <button  onClick={() => navigate(-1)} className='minimize-session'><LuMinimize2 size={15}/></button>
+            <p className='timer'>{formatDuration(currentTimer/1000)}</p>
+            </>
+            } />  
+
             <div className="container">
                 {ConfirmDialog}
                 
@@ -257,7 +261,7 @@ export default function ExerciseSession({ Template=[] }) {
                         <div key={i} className="row">
                             <div className='exercise-heading'>
                                 <h4>{exercise.name}</h4>
-                                <button onClick={() => deleteExercise(i)} className='delete-exercise'><CgTrash size={10}/></button>
+                                <button onClick={() => deleteExercise(i)} className='delete-exercise'><CgTrash size={14}/></button>
                             </div>
                             <form action="">
                                 {exercise.sets.map((set, j) => {

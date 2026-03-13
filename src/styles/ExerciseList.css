@@ -1,18 +1,37 @@
-* {
-    outline: solid;
-}
 
 .search-bar {
     max-width: 300px;
     width: 90vw;
+    padding: 4px;
+    align-self: center;
+    margin: auto;
+}
+
+.add-exercise {
+    width: fit-content;
+    height: 100%;
+    align-self: center;
+    background-color: transparent;
+    appearance: none;
+    -webkit-appearance: none;
+    -webkit-tap-highlight-color: transparent;
+    z-index: 5;
 }
 
 .container {
-    top: 0;
-    left: 0;
+    padding-top: 10vh;
     display: flex;
-    min-height: 100vh;
+    flex-direction: column;
     height: fit-content;
-    max-width: 300px;
-    width: 100vw;
+    max-width: 400px;
+    width: 90vw;
+}
+
+.exercise-row {
+    height: fit-content;
+}
+
+.exercise-row button {
+    height: fit-content;
+    background-color: transparent;
 }
