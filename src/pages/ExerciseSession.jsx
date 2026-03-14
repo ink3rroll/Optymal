@@ -119,12 +119,12 @@ export default function ExerciseSession({ Template=[] }) {
 
 
 
-    function addExercise() {
-        dispatch({
-            type: 'ADD_EXERCISE',
-            payload: "Lat Pulldown"
-        })
-    }
+    // function addExercise() {
+    //     dispatch({
+    //         type: 'ADD_EXERCISE',
+    //         payload: "Lat Pulldown"
+    //     })
+    // }
 
     function addSet(index) {
         dispatch({
@@ -192,18 +192,18 @@ export default function ExerciseSession({ Template=[] }) {
     }
 
     function formatDuration(totalSeconds) {
-    totalSeconds = Math.floor(totalSeconds);
+        totalSeconds = Math.floor(totalSeconds);
 
-    const hours = Math.floor(totalSeconds / 3600);
-    const minutes = Math.floor((totalSeconds % 3600) / 60);
-    const seconds = totalSeconds % 60;
+        const hours = Math.floor(totalSeconds / 3600);
+        const minutes = Math.floor((totalSeconds % 3600) / 60);
+        const seconds = totalSeconds % 60;
 
-    const formattedHours = String(hours).padStart(2, '0');
-    const formattedMinutes = String(minutes).padStart(2, '0');
-    const formattedSeconds = String(seconds).padStart(2, '0');
+        const formattedHours = String(hours).padStart(2, '0');
+        const formattedMinutes = String(minutes).padStart(2, '0');
+        const formattedSeconds = String(seconds).padStart(2, '0');
 
-    return hours === 0 ? `${formattedMinutes}:${formattedSeconds}` : `${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
-}
+        return hours === 0 ? `${formattedMinutes}:${formattedSeconds}` : `${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
+    }
 
     useEffect(() => {
         setCurrentSessionContext({...currentSessionContext, currentExercises: currentSession})
@@ -239,6 +239,7 @@ export default function ExerciseSession({ Template=[] }) {
     
     }, [])
 
+    console.log(currentSessionContext)
     
 
 
@@ -281,7 +282,7 @@ export default function ExerciseSession({ Template=[] }) {
                     )
                 })}
                 
-                <button  className='add-exercise-btn' onClick={() => addExercise()}>Add Exercise</button>
+                <button  className='add-exercise-btn' onClick={() => navigate("add-exercise")}>Add Exercise</button>
                 <div className='bottom-row'>
                     <button>Finish Workout</button>
                     <button onClick={() => handleDiscardSession()}>Discard Session</button>

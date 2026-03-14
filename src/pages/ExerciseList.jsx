@@ -1,10 +1,16 @@
 import '../styles/ExerciseList.css'
 import { Header } from '../components/Header'
 import { CgAddR } from 'react-icons/cg'
-import { useState } from 'react'
+import { useContext, useState } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
+import { CurrentSessionContext } from '../contexts/CurrentSession'
 
 export default function ExerciseList() {
+    const location = useLocation()
+    const navigate = useNavigate()
     const [appearModal, setAppearModal] = useState(false)
+    const [searchQuery, setSearchQuery] = useState(null)
+    const { currentSessionContext, setCurrentSessionContext } = useContext(CurrentSessionContext)
     const [exerciseAddInfo, setExerciseAddInfo] = useState({name: "", musclePart: "", type: ""})
     const [exercisesList, setExercisesList] = useState([
         {
@@ -51,7 +57,35 @@ export default function ExerciseList() {
         },
     ])
 
-    console.log(exerciseAddInfo)
+    function addExercise(exercise) {
+        console.log("Active")
+        if (location.pathname !== "/session/add-exercise" || !currentSessionContext) return
+
+        setCurrentSessionContext(prev => {
+            const exercises = prev.currentExercises || []
+
+            return {
+                ...prev,
+                currentExercises: [
+                    ...exercises,
+                    {
+                    name: exercise.name,
+                    sets: [
+                        {
+                            lbs: "",
+                            reps: ""
+                        }
+                    ]
+                }
+                ]
+            }
+        })
+        navigate("/session")
+    }
+
+    // console.log(exerciseAddInfo)
+    // console.log(searchQuery)
+    console.log(currentSessionContext)
 
     function handleAddExercise() {
         if (exerciseAddInfo.name == "" || exerciseAddInfo.musclePart == "" || exerciseAddInfo.type == "") return
@@ -67,7 +101,7 @@ export default function ExerciseList() {
         <>
         <Header children={
             <>
-                <input className="search-bar" type="text" placeholder="Search exercise, body part, muscle group..." />
+                <input onChange={(e) => setSearchQuery(e.target.value)} value={searchQuery ? searchQuery : ""} className="search-bar" type="text" placeholder="Search exercise, body part, muscle group..." />
                 <button onClick={() => setAppearModal(true)} className='add-exercise-btn'><CgAddR/></button>
             </>
             
@@ -94,7 +128,7 @@ export default function ExerciseList() {
                 {exercisesList.map((exercise) => {
                     return (
                         <div className='exercise-row'>
-                            <button>
+                            <button onClick={() => addExercise(exercise)} disabled={location.pathname === "/exercise-list"}>
                                 <h4>{exercise.name}</h4>
                                 <p>{exercise.type} | {exercise.musclePart}</p>
                             </button>

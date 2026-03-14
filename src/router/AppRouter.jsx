@@ -20,8 +20,9 @@ export function AppRouter() {
                             <Route path="/workout-templates" element={<WorkoutTemplates />}/>
                             <Route path="/history" element={<History />}/>
                             <Route path="/session" element={<ExerciseSession />}/>
+                            <Route path="/session/add-exercise" element={<ExerciseList />}/>
                     </Routes>
-                </MainLayout>        
+                </MainLayout>
             </BrowserRouter>
         </CurrentSessionProvider>
         

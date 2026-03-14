@@ -48,12 +48,22 @@
     margin: 0px;
     padding: 5px;
     
-    background-color: transparent;
+    background-color: rgb(74, 72, 72);
     border-radius: 2px;
     width: 100%;
     text-align: left;
-    /* border: solid;
-    border-width: .5px; */
+    border: transparent;
+}
+
+.exercise-row button:hover {
+    border: transparent;
+    outline: transparent;
+}
+
+.exercise-row button:disabled {
+    border: transparent;
+    outline: transparent;
+    background-color: transparent;
 }
 
 .exercise-row button h4 {
