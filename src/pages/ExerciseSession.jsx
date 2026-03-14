@@ -239,7 +239,6 @@ export default function ExerciseSession({ Template=[] }) {
     
     }, [])
 
-    console.log(currentSessionContext)
     
 
 
