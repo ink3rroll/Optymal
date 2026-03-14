@@ -187,7 +187,7 @@ export default function ExerciseSession({ Template=[] }) {
         })
 
         setCurrentSessionContext({})
-        navigate(-1)
+        navigate("/")
         
     }
 
@@ -247,7 +247,7 @@ export default function ExerciseSession({ Template=[] }) {
         <>
         <Header children={
             <>
-            <button  onClick={() => navigate(-1)} className='minimize-session'><LuMinimize2 size={15}/></button>
+            <button  onClick={() => navigate("/")} className='minimize-session'><LuMinimize2 size={15}/></button>
             <p className='timer'>{formatDuration(currentTimer/1000)}</p>
             </>
             } />  
