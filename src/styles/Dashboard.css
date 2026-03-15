@@ -1,8 +1,13 @@
+
+
 .dashboard-container {
     display: flex;
     flex-direction: column;
     max-width: 400px;
     width: 90%;
+    min-height: 100vh;
+    justify-content: center;
+    padding-bottom: 10vh;
 }
 
 button {
