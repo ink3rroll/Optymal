@@ -132,7 +132,7 @@ export default function ExerciseList() {
                 </>
             ) }
         
-            <div className="container">
+            <div style={{ paddingBottom: location.pathname !== "/session/add-exercise" ? '10vh' : '0vh' }} className="container">
                 { filteredList === null ? exercisesList.map((exercise, i) => {
                     return (
                         <div key={i} className='exercise-row'>

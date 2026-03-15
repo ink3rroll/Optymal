@@ -13,8 +13,8 @@
   text-align: center;
   justify-items: center;
   justify-content: center;
-  align-items: center;
   height: fit-content;
+  min-height: 100vh;
 }
 
 html, body {
