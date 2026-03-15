@@ -1,3 +1,7 @@
+* {
+    outline: solid;
+}
+
 
 .search-bar {
     max-width: 300px;
@@ -28,14 +32,12 @@
 }
 
 .container {
-    padding-top: 10vh;
     display: flex;
     flex-direction: column;
-    height: fit-content;
     max-width: 400px;
     width: 90vw;
     z-index: 0;
-    padding-bottom: 13vh;
+    justify-content: flex-start;
 }
 
 .exercise-row {
@@ -48,7 +50,7 @@
     margin: 0px;
     padding: 5px;
     
-    background-color: rgb(74, 72, 72);
+    background-color: transparent;
     border-radius: 2px;
     width: 100%;
     text-align: left;

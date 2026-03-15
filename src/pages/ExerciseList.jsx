@@ -1,7 +1,7 @@
 import '../styles/ExerciseList.css'
 import { Header } from '../components/Header'
 import { CgAddR } from 'react-icons/cg'
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { CurrentSessionContext } from '../contexts/CurrentSession'
 
@@ -10,6 +10,7 @@ export default function ExerciseList() {
     const navigate = useNavigate()
     const [appearModal, setAppearModal] = useState(false)
     const [searchQuery, setSearchQuery] = useState(null)
+    const [filteredList, setFilteredList] = useState(null)
     const { currentSessionContext, setCurrentSessionContext } = useContext(CurrentSessionContext)
     const [exerciseAddInfo, setExerciseAddInfo] = useState({name: "", musclePart: "", type: ""})
     const [exercisesList, setExercisesList] = useState([
@@ -83,9 +84,16 @@ export default function ExerciseList() {
         navigate("/session")
     }
 
+    useEffect(() => {
+        if (searchQuery === null) return
+        setFilteredList(exercisesList.filter((exercise) => {
+            return exercise.name?.toLowerCase().includes(searchQuery.toLowerCase()) || exercise.musclePart?.toLowerCase().includes(searchQuery.toLowerCase()) || exercise.type?.toLowerCase().includes(searchQuery.toLowerCase())
+        })) 
+    }, [searchQuery])
+
     // console.log(exerciseAddInfo)
-    // console.log(searchQuery)
-    console.log(currentSessionContext)
+    console.log(searchQuery)
+    console.log(filteredList)
 
     function handleAddExercise() {
         if (exerciseAddInfo.name == "" || exerciseAddInfo.musclePart == "" || exerciseAddInfo.type == "") return
@@ -125,16 +133,28 @@ export default function ExerciseList() {
             ) }
         
             <div className="container">
-                {exercisesList.map((exercise) => {
+                { filteredList === null ? exercisesList.map((exercise, i) => {
                     return (
-                        <div className='exercise-row'>
+                        <div key={i} className='exercise-row'>
                             <button onClick={() => addExercise(exercise)} disabled={location.pathname === "/exercise-list"}>
                                 <h4>{exercise.name}</h4>
                                 <p>{exercise.type} | {exercise.musclePart}</p>
                             </button>
                         </div>
                     )
-                })}
+                }) : (
+                    filteredList.map((exercise, i) => {
+                    return (
+                        <div key={i} className='exercise-row'>
+                            <button onClick={() => addExercise(exercise)} disabled={location.pathname === "/exercise-list"}>
+                                <h4>{exercise.name}</h4>
+                                <p>{exercise.type} | {exercise.musclePart}</p>
+                            </button>
+                        </div>
+                    )
+                })
+                )
+                }
                 
             </div>
         </>
