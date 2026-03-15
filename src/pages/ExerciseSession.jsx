@@ -266,6 +266,7 @@ export default function ExerciseSession({ Template=[] }) {
                                 {exercise.sets.map((set, j) => {
                                     return (
                                         <div key={j} className='set-row' style={{ backgroundColor: set.finished ? "#66635a" : "transparent", borderRadius: "2px" }}>
+                                            <label htmlFor="">{j+1}</label>
                                             <label htmlFor="weight">lbs</label>
                                             <input type="number"  disabled={set.finished} onChange={(e) => updateLbs(e, i, j)} value={set.lbs} id="weight" />
                                             <label htmlFor="repetition">reps</label>
