@@ -5,6 +5,7 @@
     width: 90vw;
     padding: 4px;
     align-self: center;
+    justify-self: center;
 }
 
 .add-exercise-btn {
@@ -100,4 +101,14 @@
     background-color: rgb(33, 33, 34);
     color: rgb(52, 52, 52);
 
+}
+
+.cancel-btn {
+    background-color: transparent;
+    width: fit-content;
+    -webkit-appearance: none;
+    -webkit-tap-highlight-color: transparent;
+}
+.cancel-btn:hover {
+    border: transparent;
 }

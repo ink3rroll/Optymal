@@ -4,6 +4,7 @@ import { CgAddR } from 'react-icons/cg'
 import { useContext, useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { CurrentSessionContext } from '../contexts/CurrentSession'
+import { GoArrowLeft } from 'react-icons/go'
 
 export default function ExerciseList() {
     const location = useLocation()
@@ -109,6 +110,7 @@ export default function ExerciseList() {
         <>
         <Header children={
             <>
+                {location.pathname === '/session/add-exercise' && <button  onClick={() => navigate(-1)} className='cancel-btn'><GoArrowLeft size={15}/></button>}
                 <input onChange={(e) => setSearchQuery(e.target.value)} value={searchQuery ? searchQuery : ""} className="search-bar" type="text" placeholder="Search exercise, body part, muscle group..." />
                 <button onClick={() => setAppearModal(true)} className='add-exercise-btn'><CgAddR/></button>
             </>
@@ -132,7 +134,7 @@ export default function ExerciseList() {
                 </>
             ) }
         
-            <div style={{ paddingBottom: location.pathname !== "/session/add-exercise" ? '10vh' : '0vh' }} className="container">
+            <div style={{ paddingBottom: location.pathname !== "/session/add-exercise" && '10vh' }} className="container">
                 { filteredList === null ? exercisesList.map((exercise, i) => {
                     return (
                         <div key={i} className='exercise-row'>
