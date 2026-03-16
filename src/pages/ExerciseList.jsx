@@ -107,7 +107,7 @@ export default function ExerciseList() {
                             </button>
                         </div>
                     )
-                }) : <div>No exercises</div> : (
+                }) : <div style={{ display: 'flex', textAlign: 'center', minHeight: '200px', alignItems: 'center', alignSelf: 'center' }}>No exercises</div> : (
                     filteredList.length > 0 ?
                     filteredList.map((exercise, i) => {
                     return (
@@ -118,7 +118,7 @@ export default function ExerciseList() {
                             </button>
                         </div>
                     )
-                }) : <div>No exercise found for '{searchQuery}'</div>
+                }) : <div style={{ display: 'flex', textAlign: 'center', minHeight: '200px', alignItems: 'center', alignSelf: 'center' }}>No exercise found for '{searchQuery}'</div>
                 )
                 }
                 
