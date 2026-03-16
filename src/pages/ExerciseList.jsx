@@ -5,8 +5,10 @@ import { useContext, useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { CurrentSessionContext } from '../contexts/CurrentSession'
 import { GoArrowLeft } from 'react-icons/go'
+import { ExercisesContext } from '../contexts/Exercises'
 
 export default function ExerciseList() {
+    const {exercisesContext, setExercisesContext} = useContext(ExercisesContext)
     const location = useLocation()
     const navigate = useNavigate()
     const [appearModal, setAppearModal] = useState(false)
@@ -14,53 +16,9 @@ export default function ExerciseList() {
     const [filteredList, setFilteredList] = useState(null)
     const { currentSessionContext, setCurrentSessionContext } = useContext(CurrentSessionContext)
     const [exerciseAddInfo, setExerciseAddInfo] = useState({name: "", musclePart: "", type: ""})
-    const [exercisesList, setExercisesList] = useState([
-        {
-            name: "Lat Pulldown",
-            musclePart: "Back",
-            type: "Machine"
-        },
-
-        {
-            name: "Bench Press",
-            musclePart: "Chest",
-            type: "Barbell"
-        },
-
-        {
-            name: "Lateral Raises",
-            musclePart: "Shoulders",
-            type: "Cable"
-        },
-        {
-            name: "Shoulder Press",
-            musclePart: "Shoulders",
-            type: "Machine"
-        },
-        {
-            name: "Stiff Leg Deadlift",
-            musclePart: "Hamstrings",
-            type: "Barbell"
-        },
-        {
-            name: "Wide Grip Rows",
-            musclePart: "Upper Back",
-            type: "Machine"
-        },
-        {
-            name: "Lateral Raises",
-            musclePart: "Shoulders",
-            type: "Cable"
-        },
-        {
-            name: "Lateral Raises",
-            musclePart: "Shoulders",
-            type: "Cable"
-        },
-    ])
+    const [exercisesList, setExercisesList] = useState([...exercisesContext])
 
     function addExercise(exercise) {
-        console.log("Active")
         if (location.pathname !== "/session/add-exercise" || !currentSessionContext) return
 
         setCurrentSessionContext(prev => {
@@ -85,20 +43,11 @@ export default function ExerciseList() {
         navigate("/session")
     }
 
-    useEffect(() => {
-        if (searchQuery === null) return
-        setFilteredList(exercisesList.filter((exercise) => {
-            return exercise.name?.toLowerCase().includes(searchQuery.toLowerCase()) || exercise.musclePart?.toLowerCase().includes(searchQuery.toLowerCase()) || exercise.type?.toLowerCase().includes(searchQuery.toLowerCase())
-        })) 
-    }, [searchQuery])
-
-    // console.log(exerciseAddInfo)
-    console.log(searchQuery)
-    console.log(filteredList)
+    
 
     function handleAddExercise() {
         if (exerciseAddInfo.name == "" || exerciseAddInfo.musclePart == "" || exerciseAddInfo.type == "") return
-        setExercisesList([...exercisesList, {
+        setExercisesList(prev => [...prev, {
             name: exerciseAddInfo.name,
             musclePart: exerciseAddInfo.musclePart,
             type: exerciseAddInfo.type
@@ -106,6 +55,21 @@ export default function ExerciseList() {
         setExerciseAddInfo({name: "", musclePart: "", type: ""})
         setAppearModal(false)
     }
+
+    useEffect(() => {
+        if (searchQuery === null) return
+        setFilteredList(exercisesList.filter((exercise) => {
+            return exercise.name?.toLowerCase().includes(searchQuery.toLowerCase()) || exercise.musclePart?.toLowerCase().includes(searchQuery.toLowerCase()) || exercise.type?.toLowerCase().includes(searchQuery.toLowerCase())
+        })) 
+    }, [searchQuery, exercisesList])
+
+
+    useEffect(() => {
+        setExercisesContext([...exercisesList])
+    }, [exercisesList])
+
+    console.log(exercisesContext)
+
     return (
         <>
         <Header children={
@@ -134,8 +98,8 @@ export default function ExerciseList() {
                 </>
             ) }
         
-            <div style={{ paddingBottom: location.pathname !== "/session/add-exercise" && '10vh' }} className="container">
-                { filteredList === null ? exercisesList.map((exercise, i) => {
+            <div style={{ paddingBottom: location.pathname !== "/session/add-exercise" && '3.5em' }} className="container">
+                { filteredList === null || searchQuery.length === 0 ? exercisesList.length > 0 ? exercisesList.map((exercise, i) => {
                     return (
                         <div key={i} className='exercise-row'>
                             <button onClick={() => addExercise(exercise)} disabled={location.pathname === "/exercise-list"}>
@@ -144,7 +108,8 @@ export default function ExerciseList() {
                             </button>
                         </div>
                     )
-                }) : (
+                }) : "No exercises" : (
+                    filteredList.length > 0 ?
                     filteredList.map((exercise, i) => {
                     return (
                         <div key={i} className='exercise-row'>
@@ -154,7 +119,7 @@ export default function ExerciseList() {
                             </button>
                         </div>
                     )
-                })
+                }) : `No exercise found for '${searchQuery}'`
                 )
                 }
                 

@@ -117,15 +117,6 @@ export default function ExerciseSession({ Template=[] }) {
     const [currentTimer, setCurrentTimer] = useState(currentSessionContext.startTime ? Date.now() - currentSessionContext
         .startTime : 0)
 
-
-
-    // function addExercise() {
-    //     dispatch({
-    //         type: 'ADD_EXERCISE',
-    //         payload: "Lat Pulldown"
-    //     })
-    // }
-
     function addSet(index) {
         dispatch({
             type: "ADD_SET",

@@ -6,11 +6,13 @@ import WorkoutTemplates from "../pages/WorkoutTemplates";
 import MainLayout from "../components/Layout";
 import ExerciseSession from "../pages/ExerciseSession";
 import CurrentSessionProvider from "../providers/CurrentSessionProvider.jsx";
+import ExercisesProvider from "../providers/ExercisesProvider.jsx";
 
 
 export function AppRouter() {
     return (
         <>
+        <ExercisesProvider>
         <CurrentSessionProvider>
             <BrowserRouter>
                 <MainLayout>
@@ -25,6 +27,7 @@ export function AppRouter() {
                 </MainLayout>
             </BrowserRouter>
         </CurrentSessionProvider>
+        </ExercisesProvider>
         
         </>
     )
