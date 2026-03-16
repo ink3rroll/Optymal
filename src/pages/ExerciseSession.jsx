@@ -277,8 +277,6 @@ export default function ExerciseSession() {
                     <button>Finish Workout</button>
                     <button onClick={() => handleDiscardSession()}>Discard Session</button>
                 </div>
-                    
-                    
             </div>
         </>
         

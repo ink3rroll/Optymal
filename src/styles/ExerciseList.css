@@ -1,3 +1,6 @@
+/* * {
+    outline: solid;
+} */
 
 
 .search-bar {
@@ -45,7 +48,13 @@
 }
 
 .exercise-row {
+    display: flex;
     height: fit-content;
+}
+
+.exercise-row div {
+    width: fit-content;
+    display: flex;
 }
 
 .exercise-row button {
@@ -120,4 +129,20 @@
 }
 .cancel-btn:hover {
     border: transparent;
+}
+
+h4 {
+    display: flex;
+    justify-content: space-between;
+}
+
+h4 div {
+    display: flex;
+    gap: 5px;
+}
+
+h4 button {
+    width: fit-content;
+    text-align: center;
+    justify-content: center;
 }

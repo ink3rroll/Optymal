@@ -6,11 +6,15 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import { CurrentSessionContext } from '../contexts/CurrentSession'
 import { GoArrowLeft } from 'react-icons/go'
 import { ExercisesContext } from '../contexts/Exercises'
+import { CgTrash } from 'react-icons/cg'
+import { FaRegEdit } from 'react-icons/fa'
+import useConfirm from '../hooks/Confirm'
 
 export default function ExerciseList() {
     const {exercisesContext, setExercisesContext} = useContext(ExercisesContext)
     const location = useLocation()
     const navigate = useNavigate()
+    const { confirm, ConfirmDialog } = useConfirm()
     const [appearModal, setAppearModal] = useState(false)
     const [searchQuery, setSearchQuery] = useState(null)
     const [filteredList, setFilteredList] = useState(null)
@@ -56,6 +60,14 @@ export default function ExerciseList() {
         setAppearModal(false)
     }
 
+    async function deleteExercise(index) {
+        const ok = await confirm("Are sure you want to delete this exercise? ")
+
+        if (!ok) return
+
+        setExercisesList(exercisesList.filter((exercise, i) => i !== index))
+    }
+
     useEffect(() => {
         if (searchQuery === null) return
         setFilteredList(exercisesList.filter((exercise) => {
@@ -80,6 +92,8 @@ export default function ExerciseList() {
             
             }/>
 
+            {ConfirmDialog}
+
             { appearModal && (
                 <>
                     <div className='add-exercise-modal' onClick={() => setAppearModal(false)}>
@@ -97,14 +111,21 @@ export default function ExerciseList() {
                 </>
             ) }
         
-            <div style={{ paddingBottom: location.pathname !== "/session/add-exercise" && '3.5em' }} className="container">
+            <div key={location.pathname} style={{ paddingBottom: location.pathname !== "/session/add-exercise" ? '3.5em' : '0' }} className="container">
                 { filteredList === null || searchQuery.length === 0 ? exercisesList.length > 0 ? exercisesList.map((exercise, i) => {
                     return (
                         <div key={i} className='exercise-row'>
+                             
                             <button onClick={() => addExercise(exercise)} disabled={location.pathname === "/exercise-list"}>
-                                <h4>{exercise.name}</h4>
+                                <h4>{exercise.name}
+                                </h4>
                                 <p>{exercise.type} | {exercise.musclePart}</p>
+                                
                             </button>
+                            <div className='actions'>
+                                        <button ><FaRegEdit size={15}/></button>
+                                        <button onClick={() => deleteExercise(i)}><CgTrash color='red' size={18}/></button>
+                            </div>
                         </div>
                     )
                 }) : <div style={{ display: 'flex', textAlign: 'center', minHeight: '200px', alignItems: 'center', alignSelf: 'center' }}>No exercises</div> : (
