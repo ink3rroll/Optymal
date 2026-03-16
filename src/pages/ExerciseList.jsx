@@ -21,6 +21,7 @@ export default function ExerciseList() {
     const { currentSessionContext, setCurrentSessionContext } = useContext(CurrentSessionContext)
     const [exerciseAddInfo, setExerciseAddInfo] = useState({name: "", musclePart: "", type: ""})
     const [exercisesList, setExercisesList] = useState([...exercisesContext])
+    const [editExerciseIndex, setEditExerciseIndex] = useState(null)
 
     function addExercise(exercise) {
         if (location.pathname !== "/session/add-exercise" || !currentSessionContext) return
@@ -49,14 +50,23 @@ export default function ExerciseList() {
 
     
 
-    function handleAddExercise() {
+    function handleAddUpdateExercise() {
         if (exerciseAddInfo.name == "" || exerciseAddInfo.musclePart == "" || exerciseAddInfo.type == "") return
-        setExercisesList(prev => [...prev, {
-            name: exerciseAddInfo.name,
-            musclePart: exerciseAddInfo.musclePart,
-            type: exerciseAddInfo.type
-        }])
+
+        if (editExerciseIndex === null) {
+            setExercisesList(prev => [...prev, {
+                name: exerciseAddInfo.name,
+                musclePart: exerciseAddInfo.musclePart,
+                type: exerciseAddInfo.type
+            }])
+        } else {
+            setExercisesList(prev => 
+                prev.map((item, i) => i === editExerciseIndex ? exerciseAddInfo : item)
+            )
+        }
+        
         setExerciseAddInfo({name: "", musclePart: "", type: ""})
+        setEditExerciseIndex(null)
         setAppearModal(false)
     }
 
@@ -66,6 +76,12 @@ export default function ExerciseList() {
         if (!ok) return
 
         setExercisesList(exercisesList.filter((exercise, i) => i !== index))
+    }
+
+    function editExercise(index) {
+        setEditExerciseIndex(index)
+        setExerciseAddInfo({name: exercisesList[index].name, musclePart: exercisesList[index].musclePart, type: exercisesList[index].type})
+        setAppearModal(true)
     }
 
     useEffect(() => {
@@ -79,6 +95,14 @@ export default function ExerciseList() {
     useEffect(() => {
         setExercisesContext([...exercisesList])
     }, [exercisesList])
+
+    useEffect(() => {
+        if(appearModal) return
+        setEditExerciseIndex(null)
+        setExerciseAddInfo({name: "", musclePart: "", type: ""})
+    }, [appearModal])
+
+    console.log(exerciseAddInfo === exercisesList[editExerciseIndex])
 
 
     return (
@@ -104,7 +128,7 @@ export default function ExerciseList() {
                             <input value={exerciseAddInfo.musclePart} onChange={(e) => setExerciseAddInfo({...exerciseAddInfo, musclePart: e.target.value})} id="muscle-part" type="text" placeholder='Muscle part (eg. Chest, Back, etc.)'/>
                             <label htmlFor="name">Type</label>
                             <input value={exerciseAddInfo.type} onChange={(e) => setExerciseAddInfo({...exerciseAddInfo, type: e.target.value})} id="type" type="text" placeholder='Type (eg. Machine, Barbell)'/>
-                            <button onClick={() => handleAddExercise()} className='confirm-add' disabled={exerciseAddInfo.name == "" || exerciseAddInfo.musclePart == "" || exerciseAddInfo.type == ""} >Add Exercise</button>
+                            <button onClick={() => handleAddUpdateExercise()} className='confirm-add' disabled={ JSON.stringify(exerciseAddInfo) === JSON.stringify(exercisesList[editExerciseIndex]) || exerciseAddInfo.name == "" || exerciseAddInfo.musclePart == "" || exerciseAddInfo.type == ""} >{editExerciseIndex !== null ? 'Update Exercise' : "Add Exercise"}</button>
                             <button  onClick={() => setAppearModal(false)}>Cancel</button>
                         </div>
                     </div>
@@ -123,7 +147,7 @@ export default function ExerciseList() {
                                 
                             </button>
                             <div className='actions'>
-                                        <button ><FaRegEdit size={15}/></button>
+                                        <button onClick={() => editExercise(i)}><FaRegEdit size={15}/></button>
                                         <button onClick={() => deleteExercise(i)}><CgTrash color='red' size={18}/></button>
                             </div>
                         </div>
