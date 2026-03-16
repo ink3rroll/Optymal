@@ -10,10 +10,11 @@ export function Dashboard() {
             <Link to="/session">
                 <button>{currentSessionContext.startTime ? "Continue Exercise" : "Start Exercise"}</button>
             </Link>
-                
-            <Link to="/workout-templates">
+
+            {currentSessionContext.startTime === undefined && <Link to="/workout-templates">
                 <button>Choose Workout Template</button>
-            </Link>
+            </Link>}    
+            
         </div>
     )
 }
