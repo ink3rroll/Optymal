@@ -68,7 +68,6 @@ export default function ExerciseList() {
         setExercisesContext([...exercisesList])
     }, [exercisesList])
 
-    console.log(exercisesContext)
 
     return (
         <>
@@ -108,7 +107,7 @@ export default function ExerciseList() {
                             </button>
                         </div>
                     )
-                }) : "No exercises" : (
+                }) : <div>No exercises</div> : (
                     filteredList.length > 0 ?
                     filteredList.map((exercise, i) => {
                     return (
@@ -119,7 +118,7 @@ export default function ExerciseList() {
                             </button>
                         </div>
                     )
-                }) : `No exercise found for '${searchQuery}'`
+                }) : <div>No exercise found for '{searchQuery}'</div>
                 )
                 }
                 

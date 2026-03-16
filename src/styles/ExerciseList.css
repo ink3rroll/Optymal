@@ -12,10 +12,15 @@
     width: fit-content;
     align-self: center;
     background-color: transparent;
+    border: transparent;
     appearance: none;
     -webkit-appearance: none;
     -webkit-tap-highlight-color: transparent;
     z-index: 1;
+}
+
+.add-exercise-btn:hover {
+    border: transparent;
 }
 
 .add-exercise-modal {
@@ -109,6 +114,7 @@
 .cancel-btn {
     background-color: transparent;
     width: fit-content;
+    border: transparent;
     -webkit-appearance: none;
     -webkit-tap-highlight-color: transparent;
 }

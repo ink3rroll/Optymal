@@ -12,3 +12,30 @@
   align-items: center;
   background-color: rgb(44, 47, 47);
 }
+
+
+.nav-link {
+  width: 100%;
+  -webkit-appearance: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.continue-btn {
+  display: flex;
+  position: fixed;
+  right: 0;
+  width: fit-content;
+  bottom: 4em;
+  border-radius: 0px;
+  border: transparent;
+  background-color: rgb(80, 83, 78);
+  align-items: center;
+  text-align: center;
+  justify-items: space-between;
+  gap: 0.5em;
+  border-top-left-radius: 10px;
+}
+
+.continue-btn:hover {
+  border: transparent;
+}
