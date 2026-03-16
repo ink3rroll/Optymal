@@ -1,0 +1,50 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    max-width: 400px;
+    width: 90%;
+    z-index: 0;
+    padding-top: 2.5em;
+    justify-content: flex-start;
+    padding-bottom: 4em;
+}
+
+.template-row {
+    background-color: transparent;
+}
+
+
+.template-row .template-btn {
+    background-color: rgb(47, 46, 46);  
+    border: 1px solid;
+}
+
+.template-row .template-btn .exercise-showcase {
+    display: flex;
+    flex-direction: column;
+    
+}
+
+.template-row .template-btn .exercise-showcase .exercise-name {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    font-weight: 200;
+    margin-bottom: 0px;
+    padding: 0;
+    
+}
+
+.template-row .template-btn .exercise-showcase .exercise-row {
+    border: 1px solid;
+    border-radius: 10px;
+    padding: 5px;
+    margin: 5px;
+}
+
+.lbs-reps {
+    margin: 0;
+    padding-left: 10px;
+    font-weight: 50;
+    text-align: left;
+}
