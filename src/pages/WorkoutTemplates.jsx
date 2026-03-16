@@ -1,11 +1,14 @@
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import { Header } from '../components/Header'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { CgAddR } from 'react-icons/cg'
 import '../styles/WorkoutTemplates.css'
+import { CurrentSessionContext } from '../contexts/CurrentSession'
 
 export default function WorkoutTemplates() {
     const location = useLocation()
+    const {currentSessionContext, setCurrentSessionContext} = useContext(CurrentSessionContext)
+    const navigate = useNavigate()
     const [searchQuery, setSearchQuery] = useState('')
     const [appearModal, setAppearModal] = useState(false)
     const [templateList, setTemplateList] = useState([
@@ -210,6 +213,13 @@ export default function WorkoutTemplates() {
             ]
         }
     ])
+
+    function handleSelectTemplate(index) {
+        if (currentSessionContext.startTime) return
+        setCurrentSessionContext({...currentSessionContext, currentExercises: templateList[index].exercises})
+        navigate('/session')
+    }
+
     return (
         <>
             <Header children={
@@ -222,22 +232,22 @@ export default function WorkoutTemplates() {
                         }/>
 
             <div className='container'>
-                {templateList.map((template) => {
+                {templateList.map((template, index) => {
                     return (
-                        <div className="template-row">
+                        <div key={index} onClick={() => handleSelectTemplate(index)} className="template-row">
                             <button className='template-btn'>
                                 <h3>{template.name}</h3>
                                 <div className='exercise-showcase'>
-                                    {template.exercises.map((exercise) => {
+                                    {template.exercises.map((exercise, index) => {
                                         return (
-                                            <div className='exercise-row'>
+                                            <div key={index} className='exercise-row'>
                                                 <p className='exercise-name'>{exercise.name}</p>
-                                                {exercise.sets.map((set) => {
+                                                {exercise.sets.map((set, index) => {
                                                     return (
-                                                        <>
+                                                        <div key={index}>
                                                             <p className='lbs-reps'>lbs: {set.lbs.length > 0 ? set.lbs : 0}</p>
                                                             <p className='lbs-reps'>reps: {set.reps.length > 0 ? set.reps : 0}</p>
-                                                        </>
+                                                        </div>
                                                     )
                                                 })}
                                             </div>

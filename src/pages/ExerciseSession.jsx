@@ -108,7 +108,7 @@ function sessionReducer(state, action) {
     }
 }
 
-export default function ExerciseSession({ Template=[] }) {
+export default function ExerciseSession() {
     const check = new Audio(checksound)
     const navigate = useNavigate()
     const { confirm, ConfirmDialog } = useConfirm()
@@ -222,7 +222,6 @@ export default function ExerciseSession({ Template=[] }) {
                 dispatch({
                 type: "SET_SESSION",
                 payload: [
-                    ...Template,
                     ...currentSessionContext.currentExercises,
                 ]
             })
