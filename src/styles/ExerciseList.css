@@ -37,6 +37,17 @@
     justify-content: center;
 }
 
+.add-exercise-modal .form {
+    width: 15em;
+    padding-block: 20px;
+}
+
+
+.add-exercise-modal input {
+    align-self: center;
+    justify-self: center;
+}
+
 .container {
     display: flex;
     flex-direction: column;
