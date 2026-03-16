@@ -1,7 +1,7 @@
-/* * {
+* {
   outline: solid;
   outline-color: blue;
-} */
+}
 
 * {
     box-sizing: border-box;
@@ -12,7 +12,6 @@
   width: 100%;
   text-align: center;
   justify-content: center;
-  height: fit-content;
   min-height: 100vh;
 }
 
@@ -20,11 +19,12 @@ html, body {
   margin: 0;
   overscroll-behavior: none;
   /* scrollbar-gutter: stable; */
-  overflow-x: hidden;
+  overscroll-behavior: none;
 }
 
 main {
   width: 100%;
+  min-width: 0;
   justify-items: center;
 }
 
