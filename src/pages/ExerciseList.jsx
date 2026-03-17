@@ -151,7 +151,7 @@ export default function ExerciseList() {
                             </button>
                             <div className='actions'>
                                         <button onClick={() => editExercise(i)}><FaRegEdit size={15}/></button>
-                                        <button onClick={() => deleteExercise(i)}><CgTrash color='red' size={18}/></button>
+                                        <button onClick={() => deleteExercise(i)}><CgTrash color='rgb(211, 111, 111)' size={18}/></button>
                             </div>
                         </div>
                     )

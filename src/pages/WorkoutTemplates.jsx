@@ -231,7 +231,7 @@ export default function WorkoutTemplates() {
                         
                         }/>
 
-            <div className='container'>
+            <div key={location.pathname} className='container'>
                 {templateList.map((template, index) => {
                     return (
                         <div key={index} onClick={() => handleSelectTemplate(index)} className="template-row">
@@ -245,8 +245,7 @@ export default function WorkoutTemplates() {
                                                 {exercise.sets.map((set, index) => {
                                                     return (
                                                         <div key={index}>
-                                                            <p className='lbs-reps'>lbs: {set.lbs.length > 0 ? set.lbs : 0}</p>
-                                                            <p className='lbs-reps'>reps: {set.reps.length > 0 ? set.reps : 0}</p>
+                                                            <p className='lbs-reps'>{set.lbs.length > 0 ? set.lbs : 0} x {set.reps.length > 0 ? set.reps : 0}</p>
                                                         </div>
                                                     )
                                                 })}

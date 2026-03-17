@@ -4,7 +4,6 @@
     max-width: 400px;
     width: 90%;
     z-index: 0;
-    padding-top: 2.5em;
     justify-content: flex-start;
     padding-bottom: 4em;
 }
@@ -16,11 +15,11 @@
 
 .template-row .template-btn {
     border-radius: 10px;
-    margin-bottom: 10px;
-    padding-block: 10px;
+    padding-bottom: 10px;
     width: 100%;
     background-color: rgb(47, 46, 46);
     box-shadow: 0px 0px 8px #181717;
+    padding-inline: 0px;
 }
 
 .template-row .template-btn .exercise-showcase {
@@ -40,9 +39,11 @@
 
 .template-row .template-btn .exercise-showcase .exercise-row {
     background-color: rgb(60, 58, 58);
-    border-radius: 10px;
-    padding: 5px;
-    margin: 5px;
+    border-radius: 0px;
+    padding: 10px;
+    margin-block: 2px;
+    margin-inline: 4px;
+    justify-content: space-between;
 }
 
 .lbs-reps {

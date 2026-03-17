@@ -13,9 +13,11 @@
   background-color: rgb(44, 47, 47);
 }
 
-
 .nav-link {
+  display: flex;
   width: 100%;
+  height: fit-content;
+  justify-content: center;
   -webkit-appearance: none;
   -webkit-tap-highlight-color: transparent;
 }
