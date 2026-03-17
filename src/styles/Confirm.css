@@ -8,6 +8,8 @@
     width: 100%;
     align-content: center;
     justify-items: center;
+    justify-content: center;
+    align-self: center;
 }
 
 .confirm-modal .card {
