@@ -9,6 +9,12 @@
   min-height: 100dvh;
 }
 
+#root input {
+  font-size: 16px;
+  padding-left: 5px;
+  padding-block: 5px;
+}
+
 html, body {
   margin: 0;
   overscroll-behavior: none;
