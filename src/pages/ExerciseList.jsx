@@ -50,7 +50,9 @@ export default function ExerciseList() {
 
     
 
-    function handleAddUpdateExercise() {
+    function handleAddUpdateExercise(e) {
+        e.preventDefault()
+
         if (exerciseAddInfo.name == "" || exerciseAddInfo.musclePart == "" || exerciseAddInfo.type == "") return
 
         if (editExerciseIndex === null) {
@@ -102,7 +104,6 @@ export default function ExerciseList() {
         setExerciseAddInfo({name: "", musclePart: "", type: ""})
     }, [appearModal])
 
-    console.log(exerciseAddInfo === exercisesList[editExerciseIndex])
 
 
     return (
@@ -122,14 +123,16 @@ export default function ExerciseList() {
                 <>
                     <div className='add-exercise-modal' onClick={() => setAppearModal(false)}>
                         <div className='form' onClick={(e) => e.stopPropagation()}>
-                            <label htmlFor="name">Exercise Name</label>
-                            <input value={exerciseAddInfo.name} onChange={(e) => setExerciseAddInfo({...exerciseAddInfo, name: e.target.value})} id="name" type="text" placeholder='Exercise name (eg. Bench Press)' />
-                            <label htmlFor="name">Muscle Part</label>
-                            <input value={exerciseAddInfo.musclePart} onChange={(e) => setExerciseAddInfo({...exerciseAddInfo, musclePart: e.target.value})} id="muscle-part" type="text" placeholder='Muscle part (eg. Chest, Back, etc.)'/>
-                            <label htmlFor="name">Type</label>
-                            <input value={exerciseAddInfo.type} onChange={(e) => setExerciseAddInfo({...exerciseAddInfo, type: e.target.value})} id="type" type="text" placeholder='Type (eg. Machine, Barbell)'/>
-                            <button onClick={() => handleAddUpdateExercise()} className='confirm-add' disabled={ JSON.stringify(exerciseAddInfo) === JSON.stringify(exercisesList[editExerciseIndex]) || exerciseAddInfo.name == "" || exerciseAddInfo.musclePart == "" || exerciseAddInfo.type == ""} >{editExerciseIndex !== null ? 'Update Exercise' : "Add Exercise"}</button>
-                            <button  onClick={() => setAppearModal(false)}>Cancel</button>
+                            <form action="" onSubmit={(e) => handleAddUpdateExercise(e)}>
+                                <label htmlFor="name">Exercise Name</label>
+                                <input value={exerciseAddInfo.name} onChange={(e) => setExerciseAddInfo({...exerciseAddInfo, name: e.target.value})} id="name" type="text" placeholder='Exercise name (eg. Bench Press)' />
+                                <label htmlFor="name">Muscle Part</label>
+                                <input value={exerciseAddInfo.musclePart} onChange={(e) => setExerciseAddInfo({...exerciseAddInfo, musclePart: e.target.value})} id="muscle-part" type="text" placeholder='Muscle part (eg. Chest, Back, etc.)'/>
+                                <label htmlFor="name">Type</label>
+                                <input value={exerciseAddInfo.type} onChange={(e) => setExerciseAddInfo({...exerciseAddInfo, type: e.target.value})} id="type" type="text" placeholder='Type (eg. Machine, Barbell)'/>
+                                <button type='submit' className='confirm-add' disabled={ JSON.stringify(exerciseAddInfo) === JSON.stringify(exercisesList[editExerciseIndex]) || exerciseAddInfo.name == "" || exerciseAddInfo.musclePart == "" || exerciseAddInfo.type == ""} >{editExerciseIndex !== null ? 'Update Exercise' : "Add Exercise"}</button>
+                                <button type='button'  onClick={() => setAppearModal(false)}>Cancel</button>
+                            </form>
                         </div>
                     </div>
                 </>
