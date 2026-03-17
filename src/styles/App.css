@@ -1,7 +1,7 @@
-/* * {
+* {
   outline: solid;
   outline-color: blue;
-} */
+}
 
 * {
     box-sizing: border-box;
@@ -10,9 +10,8 @@
 #root {
   display: flex;
   width: 100%;
-  text-align: center;
   justify-content: center;
-  min-height: 100vh;
+  min-height: 100dvh;
 }
 
 html, body {
@@ -23,9 +22,12 @@ html, body {
 }
 
 main {
+  display: flex;
+  flex-direction: column;
   width: 100%;
   min-width: 0;
-  justify-items: center;
+  justify-content: center;
+  align-items: center;
 }
 
 button {
