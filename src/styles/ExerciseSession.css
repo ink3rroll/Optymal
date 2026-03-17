@@ -25,34 +25,6 @@ input {
     background-color: rgba(47, 46, 46, 0.9);
 }
 
-.delete-modal {
-    top: 0;
-    left: 0;
-    background-color: rgba(54, 61, 61, 0.7);
-    position: fixed;
-    z-index: 2;
-    height: 100%;
-    width: 100%;
-    align-content: center;
-    justify-items: center;
-}
-
-.delete-modal .card {
-    max-width: 250px;
-    height: fit-content;
-    width: fit-content;
-    background-color: #181717;
-    padding: 30px;
-    border-radius: 10px;
-}
-
-.delete-modal .card button{
-    background-color: transparent;
-    border: solid;
-    border-width: 1px;
-}
-
-
 .exercise-heading {
     display: flex;
     justify-content: space-between;

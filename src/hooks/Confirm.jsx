@@ -1,4 +1,5 @@
 import { useState } from "react";
+import '../styles/Confirm.css'
 
 export default function useConfirm() {
     const [confirmState, setConfirmState] = useState(null)
@@ -23,7 +24,7 @@ export default function useConfirm() {
     }
 
     const ConfirmDialog = confirmState && (
-        <div className='delete-modal'>
+        <div className='confirm-modal'>
                         <div className='card'>
                             <p>{confirmState.message}</p>
                             <div>
