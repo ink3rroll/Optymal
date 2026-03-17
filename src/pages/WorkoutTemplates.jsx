@@ -196,8 +196,16 @@ export default function WorkoutTemplates() {
                     name: "Bench Press",
                     sets: [
                         {
-                            lbs: "",
-                            reps: ""
+                            lbs: "234",
+                            reps: "12"
+                        },
+                        {
+                            lbs: "234",
+                            reps: "9"
+                        },
+                        {
+                            lbs: "234",
+                            reps: "6"
                         }
                     ]
                 },
@@ -242,13 +250,16 @@ export default function WorkoutTemplates() {
                                         return (
                                             <div key={index} className='exercise-row'>
                                                 <p className='exercise-name'>{exercise.name}</p>
-                                                {exercise.sets.map((set, index) => {
-                                                    return (
-                                                        <div key={index}>
-                                                            <p className='lbs-reps'>{set.lbs.length > 0 ? set.lbs : 0} x {set.reps.length > 0 ? set.reps : 0}</p>
-                                                        </div>
-                                                    )
-                                                })}
+                                                <div className='sets-row'>
+                                                    {exercise.sets.map((set, index) => {
+                                                        return (
+                                                            <div key={index}>
+                                                                <p className='lbs-reps'>{set.lbs.length > 0 ? set.lbs : 0} x {set.reps.length > 0 ? set.reps : 0}</p>
+                                                            </div>
+                                                        )
+                                                    })}
+                                                </div>
+                                                
                                             </div>
                                             
                                         )

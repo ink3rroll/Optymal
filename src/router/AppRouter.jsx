@@ -7,11 +7,13 @@ import MainLayout from "../components/Layout";
 import ExerciseSession from "../pages/ExerciseSession";
 import CurrentSessionProvider from "../providers/CurrentSessionProvider.jsx";
 import ExercisesProvider from "../providers/ExercisesProvider.jsx";
+import SessionHistoryProvider from "../providers/SessionHistoryProvider.jsx";
 
 
 export function AppRouter() {
     return (
         <>
+        <SessionHistoryProvider>
         <ExercisesProvider>
         <CurrentSessionProvider>
             <BrowserRouter>
@@ -28,6 +30,7 @@ export function AppRouter() {
             </BrowserRouter>
         </CurrentSessionProvider>
         </ExercisesProvider>
+        </SessionHistoryProvider>
         
         </>
     )

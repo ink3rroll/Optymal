@@ -4,9 +4,11 @@
     max-width: 400px;
     width: 90%;
     z-index: 0;
+    padding-top: 3.5em;
     justify-content: flex-start;
     padding-bottom: 4em;
 }
+
 
 .template-row {
     background-color: transparent;
@@ -44,6 +46,12 @@
     margin-block: 2px;
     margin-inline: 4px;
     justify-content: space-between;
+}
+
+.template-row .template-btn .exercise-showcase .exercise-row .sets-row {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
 }
 
 .lbs-reps {

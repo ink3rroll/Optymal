@@ -8,6 +8,7 @@ import checksound from '../assets/checksound.mp3'
 import { CurrentSessionContext } from '../contexts/CurrentSession'
 import { LuMinimize2 } from 'react-icons/lu'
 import { Header } from '../components/Header'
+import { SessionHistoryContext } from '../contexts/SessionHistory'
 
 function sessionReducer(state, action) {
     switch (action.type) {
@@ -109,6 +110,7 @@ function sessionReducer(state, action) {
 }
 
 export default function ExerciseSession() {
+    const {sessionHistoryContext, setSessionHistoryContext} = useContext(SessionHistoryContext)
     const check = new Audio(checksound)
     const navigate = useNavigate()
     const { confirm, ConfirmDialog } = useConfirm()
@@ -196,6 +198,16 @@ export default function ExerciseSession() {
         return hours === 0 ? `${formattedMinutes}:${formattedSeconds}` : `${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
     }
 
+    async function handleSubmitSession() {
+        if (currentSessionContext.currentExercises === undefined || currentSessionContext.currentExercises.length === 0) return
+        const ok = await confirm("Are you sure you want to finish this workout?")
+
+        if (!ok) return
+        setSessionHistoryContext(prev => [...prev, currentSessionContext])
+        setCurrentSessionContext({})
+        navigate('/')
+    }
+
     useEffect(() => {
         setCurrentSessionContext({...currentSessionContext, currentExercises: currentSession})
     }, [currentSession])
@@ -274,7 +286,7 @@ export default function ExerciseSession() {
                 
                 <button  className='add-exercise-btn' onClick={() => navigate("add-exercise")}>Add Exercise</button>
                 <div className='bottom-row'>
-                    <button>Finish Workout</button>
+                    <button className='finish-btn' onClick={() => handleSubmitSession()} disabled={currentSessionContext.currentExercises === undefined}>Finish Workout</button>
                     <button onClick={() => handleDiscardSession()}>Discard Session</button>
                 </div>
             </div>
