@@ -37,6 +37,7 @@
   justify-items: space-between;
   gap: 0.5em;
   border-top-left-radius: 10px;
+  z-index: 99;
 }
 
 .continue-btn:hover {
