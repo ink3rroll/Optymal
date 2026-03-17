@@ -1,6 +1,9 @@
 import { Link } from 'react-router-dom'
-import { RiArtboardFill, RiKnifeLine, RiArchive2Line, RiTimeLine } from 'react-icons/ri'
+import { MdOutlineHistoryEdu } from 'react-icons/md'
+import { CgGym } from 'react-icons/cg'
+import { TbLayoutDashboard } from 'react-icons/tb'
 import { useLocation, useNavigate } from 'react-router-dom'
+import { GoProjectTemplate } from 'react-icons/go'
 import '../styles/NavBar.css'
 import { useContext, useEffect, useState } from 'react'
 import { CurrentSessionContext } from '../contexts/CurrentSession'
@@ -39,10 +42,10 @@ export default function Navbar() {
             <div className='bottom'>
                 {currentSessionContext.startTime && <button onClick={() => navigate('/session')} className='continue-btn'>Continue workout: {formatDuration((currentTimer)/1000)} <HiArrowCircleRight size={25} /></button>}
                 <nav className="navbar">
-                    <Link className='nav-link' to="/"><RiArtboardFill color={location.pathname === "/" ? "#b3e5e8" : "grey"} size="1.5em"/></Link>
-                    <Link className='nav-link' to="/exercise-list"><RiKnifeLine color={location.pathname === "/exercise-list" ? "#b3e5e8" : "grey"} size="1.5em"/></Link>
-                    <Link className='nav-link' to="/workout-templates"><RiArchive2Line color={location.pathname === "/workout-templates" ? "#b3e5e8" : "grey"} size="1.5em"/></Link>
-                    <Link className='nav-link' to="/history"><RiTimeLine color={location.pathname === "/history" ? "#b3e5e8" : "grey"} size="1.5em"/></Link>
+                    <Link className='nav-link' to="/"><TbLayoutDashboard color={location.pathname === "/" ? "#b3e5e8" : "grey"} size="1.5em"/></Link>
+                    <Link className='nav-link' to="/exercise-list"><CgGym color={location.pathname === "/exercise-list" ? "#b3e5e8" : "grey"} size="1.5em"/></Link>
+                    <Link className='nav-link' to="/workout-templates"><GoProjectTemplate color={location.pathname === "/workout-templates" ? "#b3e5e8" : "grey"} size="1.5em"/></Link>
+                    <Link className='nav-link' to="/history"><MdOutlineHistoryEdu color={location.pathname === "/history" ? "#b3e5e8" : "grey"} size="1.5em"/></Link>
             </nav>
             </div>
         </>
