@@ -31,6 +31,7 @@ input {
     align-items: center;
     padding-inline-start: 20px;
     height: fit-content;
+    width: 100%;
 }
 
 .exercise-heading button {
@@ -51,33 +52,43 @@ input:focus {
     border-radius: 10px;
     margin-bottom: 10px;
     padding-block: 10px;
+    paddin
     width: 100%;
     background-color: rgb(47, 46, 46);
     box-shadow: 0px 0px 8px #181717;
     align-items: center;
 }
 
+.row form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
 .row .add-set-btn {
+    display: flex;
+    flex-direction: column;
     background-color: transparent;
     border-radius: 10px;
     border: solid;
     font-size: 12px;
     border-width: 1px;
-    width: 90%;
+    width: 100%;
     border-color: rgba(10, 100, 100, 0.9);
 }
 
 .row .set-row {
+    width: 100%;
     display: flex;
     align-content: center;
     align-items: center;
     justify-content: center;
     border-radius: 0px;
     height: fit-content;
-    padding: 2px;
+    padding-inline: 30px;
     margin: -1px;
-    justify-items: c;
     justify-content: space-between;
+    
 }
 
 .bottom-row {
