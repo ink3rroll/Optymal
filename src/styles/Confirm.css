@@ -7,10 +7,10 @@
     height: 100%;
     width: 100%;
     align-content: center;
-    align-items: center;
-    justify-content: center;
-    justify-items: center;
-    align-self: center;
+}
+
+* {
+    outline: solid;
 }
 
 .confirm-modal .card {
