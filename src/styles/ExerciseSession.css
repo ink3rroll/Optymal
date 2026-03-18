@@ -52,7 +52,6 @@ input:focus {
     border-radius: 10px;
     margin-bottom: 10px;
     padding-block: 10px;
-    paddin
     width: 100%;
     background-color: rgb(47, 46, 46);
     box-shadow: 0px 0px 8px #181717;
@@ -73,7 +72,7 @@ input:focus {
     border: solid;
     font-size: 12px;
     border-width: 1px;
-    width: 100%;
+    width: 90%;
     border-color: rgba(10, 100, 100, 0.9);
 }
 
