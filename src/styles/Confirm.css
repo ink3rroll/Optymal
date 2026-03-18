@@ -1,12 +1,12 @@
 .confirm-modal {
-    top: 0;
-    left: 0;
-    background-color: rgba(54, 61, 61, 0.7);
+    display: flex;
     position: fixed;
-    z-index: 101;
-    height: 100%;
     width: 100%;
-    align-content: center;
+    height: 100vh;
+    background-color: rgba(60, 60, 60, 0.7);
+    z-index: 100;
+    align-items: center;
+    justify-content: center;
 }
 
 * {
@@ -14,12 +14,8 @@
 }
 
 .confirm-modal .card {
-    max-width: 250px;
-    height: fit-content;
-    width: fit-content;
-    background-color: #181717;
-    padding: 30px;
-    border-radius: 10px;
+    width: 15em;
+    padding-block: 20px;
 }
 
 .confirm-modal .card button{
