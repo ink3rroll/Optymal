@@ -9,6 +9,36 @@
   min-height: 100dvh;
 }
 
+.confirm-modal {
+    top: 0;
+    left: 0;
+    background-color: rgba(54, 61, 61, 0.7);
+    position: fixed;
+    z-index: 101;
+    height: 100%;
+    width: 100%;
+    align-content: center;
+    align-items: center;
+    justify-content: center;
+    justify-items: center;
+    align-self: center;
+}
+
+.confirm-modal .card {
+    max-width: 250px;
+    height: fit-content;
+    width: fit-content;
+    background-color: #181717;
+    padding: 30px;
+    border-radius: 10px;
+}
+
+.confirm-modal .card button{
+    background-color: transparent;
+    border: solid;
+    border-width: 1px;
+}
+
 #root input {
   font-size: 16px;
   padding-left: 5px;
