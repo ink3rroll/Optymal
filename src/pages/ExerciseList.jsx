@@ -9,6 +9,7 @@ import { ExercisesContext } from '../contexts/Exercises'
 import { CgTrash } from 'react-icons/cg'
 import { FaRegEdit } from 'react-icons/fa'
 import useConfirm from '../hooks/Confirm'
+import { getExercises } from '../api/apiExercises'
 
 export default function ExerciseList() {
     const {exercisesContext, setExercisesContext} = useContext(ExercisesContext)
@@ -85,6 +86,24 @@ export default function ExerciseList() {
         setExerciseAddInfo({name: exercisesList[index].name, musclePart: exercisesList[index].musclePart, type: exercisesList[index].type})
         setAppearModal(true)
     }
+
+    useEffect(() => {
+        if (exercisesList.length !== 0) return
+        const fetchData = async () => {
+            try {
+                console.log("Here")
+                const data = await getExercises()
+                console.log("Finish")
+
+                setExercisesList(data)
+                console.log("Finish na")
+            } catch (err) {
+                throw new Error("Failed fetchaasfaeef")
+            }
+        }
+
+        fetchData()
+    }, [])
 
     useEffect(() => {
         if (searchQuery === null) return
