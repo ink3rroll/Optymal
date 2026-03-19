@@ -91,12 +91,9 @@ export default function ExerciseList() {
         if (exercisesList.length !== 0) return
         const fetchData = async () => {
             try {
-                console.log("Here")
                 const data = await getExercises()
-                console.log("Finish")
 
                 setExercisesList(data)
-                console.log("Finish na")
             } catch (err) {
                 throw new Error("Failed fetchaasfaeef")
             }
