@@ -55,7 +55,7 @@ export default function ExerciseList() {
             try {
                 const data = await getExercises()
 
-                setExercisesList(data)
+                setExercisesContext(data)
             } catch (err) {
                 throw new Error("Failed fetchaasfaeef")
             }
