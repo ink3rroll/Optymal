@@ -54,6 +54,7 @@ export default function ExerciseList() {
         const fetchData = async () => {
             try {
                 const data = await getExercises()
+                console.log(data)
 
                 setExercisesContext(data)
             } catch (err) {
