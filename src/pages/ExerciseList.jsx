@@ -21,7 +21,6 @@ export default function ExerciseList() {
     const [filteredList, setFilteredList] = useState(null)
     const { currentSessionContext, setCurrentSessionContext } = useContext(CurrentSessionContext)
     const [exerciseAddInfo, setExerciseAddInfo] = useState({name: "", musclePart: "", type: ""})
-    const [exercisesList, setExercisesList] = useState([...exercisesContext])
     const [editExerciseIndex, setEditExerciseIndex] = useState(null)
 
     function addExercise(exercise) {
@@ -78,15 +77,13 @@ export default function ExerciseList() {
 
             const created = await postExercise(exerciseAddInfo)
 
-            setExercisesList(prev=> [...prev, created.data])
+            setExercisesContext(prev=> [...prev, created.data])
 
             console.log('returns what:'+ JSON.stringify(created))
 
             if (created.data) refetch()
-
-            return () => setExercisesList(exercisesContext)
         } else {
-            setExercisesList(prev => 
+            setExercisesContext(prev => 
                 prev.map((item, i) => i === editExerciseIndex ? exerciseAddInfo : item)
             )
         }
@@ -101,14 +98,14 @@ export default function ExerciseList() {
 
         if (!ok) return
 
-        setExercisesList(exercisesList.filter((exercise, i) => i !== index))
+        setExercisesContext(exercisesContext.filter((exercise, i) => i !== index))
     }
 
     
 
     function editExercise(index) {
         setEditExerciseIndex(index)
-        setExerciseAddInfo({name: exercisesList[index].name, musclePart: exercisesList[index].musclePart, type: exercisesList[index].type})
+        setExerciseAddInfo({name: exercisesContext[index].name, musclePart: exercisesContext[index].musclePart, type: exercisesContext[index].type})
         setAppearModal(true)
     }
 
@@ -120,15 +117,15 @@ export default function ExerciseList() {
 
     useEffect(() => {
         if (searchQuery === null) return
-        setFilteredList(exercisesList.filter((exercise) => {
+        setFilteredList(exercisesContext.filter((exercise) => {
             return exercise.name?.toLowerCase().includes(searchQuery.toLowerCase()) || exercise.musclePart?.toLowerCase().includes(searchQuery.toLowerCase()) || exercise.type?.toLowerCase().includes(searchQuery.toLowerCase())
         })) 
-    }, [searchQuery, exercisesList])
+    }, [searchQuery, exercisesContext])
 
 
-    useEffect(() => {
-        setExercisesContext([...exercisesList])
-    }, [exercisesList])
+    // useEffect(() => {
+    //     setExercisesContext([...exercisesList])
+    // }, [exercisesList])
 
     useEffect(() => {
         if(appearModal) return
@@ -162,7 +159,7 @@ export default function ExerciseList() {
                                 <input value={exerciseAddInfo.musclePart} onChange={(e) => setExerciseAddInfo({...exerciseAddInfo, musclePart: e.target.value})} id="muscle-part" type="text" placeholder='Muscle part (eg. Chest, Back, etc.)'/>
                                 <label htmlFor="name">Type</label>
                                 <input value={exerciseAddInfo.type} onChange={(e) => setExerciseAddInfo({...exerciseAddInfo, type: e.target.value})} id="type" type="text" placeholder='Type (eg. Machine, Barbell)'/>
-                                <button type='submit' className='confirm-add' disabled={ JSON.stringify(exerciseAddInfo) === JSON.stringify(exercisesList[editExerciseIndex]) || exerciseAddInfo.name == "" || exerciseAddInfo.musclePart == "" || exerciseAddInfo.type == ""} >{editExerciseIndex !== null ? 'Update Exercise' : "Add Exercise"}</button>
+                                <button type='submit' className='confirm-add' disabled={ JSON.stringify(exerciseAddInfo) === JSON.stringify(exercisesContext[editExerciseIndex]) || exerciseAddInfo.name == "" || exerciseAddInfo.musclePart == "" || exerciseAddInfo.type == ""} >{editExerciseIndex !== null ? 'Update Exercise' : "Add Exercise"}</button>
                                 <button type='button'  onClick={() => setAppearModal(false)}>Cancel</button>
                             </form>
                         </div>
@@ -171,7 +168,7 @@ export default function ExerciseList() {
             ) }
         
             <div key={location.pathname} style={{ paddingBottom: location.pathname !== "/session/add-exercise" ? '3.5em' : '0' }} className="container">
-                { filteredList === null || searchQuery.length === 0 ? exercisesList.length > 0 ? exercisesList.map((exercise, i) => {
+                { filteredList === null || searchQuery.length === 0 ? exercisesContext.length > 0 ? exercisesContext.map((exercise, i) => {
                     return (
                         <div key={i} className='exercise-row'>
                              
