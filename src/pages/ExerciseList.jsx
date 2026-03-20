@@ -83,6 +83,8 @@ export default function ExerciseList() {
             console.log('returns what:'+ JSON.stringify(created))
 
             if (created.data) refetch()
+
+            return setExercisesList(exercisesContext)
         } else {
             setExercisesList(prev => 
                 prev.map((item, i) => i === editExerciseIndex ? exerciseAddInfo : item)
@@ -114,6 +116,7 @@ export default function ExerciseList() {
         if (exercisesContext.length > 0) return
         refetch()
     }, [])
+
 
     useEffect(() => {
         if (searchQuery === null) return
