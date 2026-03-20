@@ -84,7 +84,7 @@ export default function ExerciseList() {
 
             if (created.data) refetch()
 
-            return setExercisesList(exercisesContext)
+            return () => setExercisesList(exercisesContext)
         } else {
             setExercisesList(prev => 
                 prev.map((item, i) => i === editExerciseIndex ? exerciseAddInfo : item)
