@@ -1,4 +1,4 @@
-const BASE_URL = "http://localhost:3000"
+const BASE_URL = import.meta.env.PROD ? "https://optymal-backend-1.onrender.com" : "http://localhost:3000"
 
 // const BASE_URL = "https://optymal-backend-1.onrender.com"
 
