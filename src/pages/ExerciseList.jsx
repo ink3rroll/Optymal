@@ -51,7 +51,6 @@ export default function ExerciseList() {
 
     async function refetch() {
         console.log('refetching')
-        if (exercisesList.length !== 0) return
         const fetchData = async () => {
             try {
                 const data = await getExercises()
