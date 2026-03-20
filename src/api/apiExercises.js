@@ -1,6 +1,6 @@
 // const BASE_URL = "http://localhost:3000"
 
-const BASE_URL = "https://optymal-backend.onrender.com"
+const BASE_URL = "https://optymal-backend-1.onrender.com"
 
 export const getExercises = async () => {
     const res = await fetch(`${BASE_URL}/exercises`)
