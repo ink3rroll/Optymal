@@ -9,7 +9,7 @@ import { ExercisesContext } from '../contexts/Exercises'
 import { CgTrash } from 'react-icons/cg'
 import { FaRegEdit } from 'react-icons/fa'
 import useConfirm from '../hooks/Confirm'
-import { getExercises } from '../api/apiExercises'
+import { getExercises, postExercises } from '../api/apiExercises'
 
 export default function ExerciseList() {
     const {exercisesContext, setExercisesContext} = useContext(ExercisesContext)
