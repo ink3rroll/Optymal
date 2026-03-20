@@ -57,6 +57,7 @@ export default function ExerciseList() {
                 console.log(data)
 
                 setExercisesContext(data)
+                console.log("context: ", exercisesContext)
             } catch (err) {
                 throw new Error("Failed fetchaasfaeef")
             }
