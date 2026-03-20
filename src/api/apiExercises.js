@@ -8,12 +8,25 @@ export const getExercises = async () => {
     return await res.json()
 }
 
-export const postExercises = async (exercises) => {
-    const res = await fetch(`${BASE_URL}/exercises`, {
-        method: 'POST',
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify([...exercises])
-    })
+export const postExercise = async (exercise) => {
+    console.log("Im here")
+    try {
+        const res = await fetch(`${BASE_URL}/exercises`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(exercise)
+        })
+
+        if (!res.ok) throw new Error('Mali')
+
+        const data = await res.json()
+        console.log('Success: ', data)
+
+        return data
+    } catch (err) {
+        alert("Could not add new exercise: " + err.message)
+    }
+    
 }
