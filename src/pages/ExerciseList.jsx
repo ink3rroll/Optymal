@@ -52,23 +52,17 @@ export default function ExerciseList() {
     async function refetch() {
         console.log('refetching')
         setLoadingDialog(true)
-        const fetchData = async () => {
             try {
                 const data = await getExercises()
                 console.log(data)
 
                 setExercisesContext(data)
-                console.log("context: ", exercisesContext)
             } catch (err) {
                 throw new Error("Failed fetchaasfaeef")
             } finally {
                 setLoadingDialog(false)
             }
         }
-
-        fetchData()
-        
-    }
 
     
 
