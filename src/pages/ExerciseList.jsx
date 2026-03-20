@@ -17,6 +17,7 @@ export default function ExerciseList() {
     const navigate = useNavigate()
     const { confirm, ConfirmDialog } = useConfirm()
     const [loadingDialog, setLoadingDialog] = useState(false)
+    const [errorFetching, setErrorFetching] = useState(false)
     const [appearModal, setAppearModal] = useState(false)
     const [searchQuery, setSearchQuery] = useState(null)
     const [filteredList, setFilteredList] = useState(null)
@@ -183,7 +184,7 @@ export default function ExerciseList() {
                             </div>
                         </div>
                     )
-                }) : <div style={{ display: 'flex', textAlign: 'center', minHeight: '200px', alignItems: 'center', alignSelf: 'center' }}>{loadingDialog ? 'Loading data...' : 'No exercises'}</div> : (
+                }) : <div style={{ display: 'flex', textAlign: 'center', minHeight: '200px', alignItems: 'center', alignSelf: 'center' }}>{loadingDialog ? 'Loading data...' : "<button onClick={() => refetch()}>Retry</button>"} </div> : (
                     filteredList.length > 0 ?
                     filteredList.map((exercise, i) => {
                     return (
