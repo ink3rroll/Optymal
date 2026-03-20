@@ -9,7 +9,7 @@ import { ExercisesContext } from '../contexts/Exercises'
 import { CgTrash } from 'react-icons/cg'
 import { FaRegEdit } from 'react-icons/fa'
 import useConfirm from '../hooks/Confirm'
-import { getExercises, postExercises } from '../api/apiExercises'
+import { getExercises, postExercise } from '../api/apiExercises'
 
 export default function ExerciseList() {
     const {exercisesContext, setExercisesContext} = useContext(ExercisesContext)
@@ -49,19 +49,39 @@ export default function ExerciseList() {
         navigate("/session")
     }
 
+    async function refetch() {
+        console.log('refetching')
+        if (exercisesList.length !== 0) return
+        const fetchData = async () => {
+            try {
+                const data = await getExercises()
+
+                setExercisesList(data)
+            } catch (err) {
+                throw new Error("Failed fetchaasfaeef")
+            }
+        }
+
+        fetchData()
+    }
+
     
 
-    function handleAddUpdateExercise(e) {
+    async function handleAddUpdateExercise(e) {
         e.preventDefault()
 
         if (exerciseAddInfo.name == "" || exerciseAddInfo.musclePart == "" || exerciseAddInfo.type == "") return
 
         if (editExerciseIndex === null) {
-            setExercisesList(prev => [...prev, {
-                name: exerciseAddInfo.name,
-                musclePart: exerciseAddInfo.musclePart,
-                type: exerciseAddInfo.type
-            }])
+            console.log("Hello?", exerciseAddInfo)
+
+            const created = await postExercise(exerciseAddInfo)
+
+            setExercisesList(prev=> [...prev, created.data])
+
+            console.log('returns what:'+ JSON.stringify(created))
+
+            if (created.data) refetch()
         } else {
             setExercisesList(prev => 
                 prev.map((item, i) => i === editExerciseIndex ? exerciseAddInfo : item)
@@ -81,6 +101,8 @@ export default function ExerciseList() {
         setExercisesList(exercisesList.filter((exercise, i) => i !== index))
     }
 
+    
+
     function editExercise(index) {
         setEditExerciseIndex(index)
         setExerciseAddInfo({name: exercisesList[index].name, musclePart: exercisesList[index].musclePart, type: exercisesList[index].type})
@@ -88,18 +110,8 @@ export default function ExerciseList() {
     }
 
     useEffect(() => {
-        if (exercisesList.length !== 0) return
-        const fetchData = async () => {
-            try {
-                const data = await getExercises()
-
-                setExercisesList(data)
-            } catch (err) {
-                throw new Error("Failed fetchaasfaeef")
-            }
-        }
-
-        fetchData()
+        if (exercisesContext.length > 0) return
+        refetch()
     }, [])
 
     useEffect(() => {
