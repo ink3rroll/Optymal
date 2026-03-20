@@ -16,6 +16,7 @@ export default function ExerciseList() {
     const location = useLocation()
     const navigate = useNavigate()
     const { confirm, ConfirmDialog } = useConfirm()
+    const [loadingDialog, setLoadingDialog] = useState(false)
     const [appearModal, setAppearModal] = useState(false)
     const [searchQuery, setSearchQuery] = useState(null)
     const [filteredList, setFilteredList] = useState(null)
@@ -50,6 +51,7 @@ export default function ExerciseList() {
 
     async function refetch() {
         console.log('refetching')
+        setLoadingDialog(true)
         const fetchData = async () => {
             try {
                 const data = await getExercises()
@@ -59,10 +61,13 @@ export default function ExerciseList() {
                 console.log("context: ", exercisesContext)
             } catch (err) {
                 throw new Error("Failed fetchaasfaeef")
+            } finally {
+                setLoadingDialog(false)
             }
         }
 
         fetchData()
+        
     }
 
     
@@ -184,7 +189,7 @@ export default function ExerciseList() {
                             </div>
                         </div>
                     )
-                }) : <div style={{ display: 'flex', textAlign: 'center', minHeight: '200px', alignItems: 'center', alignSelf: 'center' }}>No exercises</div> : (
+                }) : <div style={{ display: 'flex', textAlign: 'center', minHeight: '200px', alignItems: 'center', alignSelf: 'center' }}>{loadingDialog ? 'Loading data...' : 'No exercises'}</div> : (
                     filteredList.length > 0 ?
                     filteredList.map((exercise, i) => {
                     return (
