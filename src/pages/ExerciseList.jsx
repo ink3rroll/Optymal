@@ -51,11 +51,9 @@ export default function ExerciseList() {
     }
 
     async function refetch() {
-        console.log('refetching')
         setLoadingDialog(true)
             try {
                 const data = await getExercises()
-                console.log(data)
 
                 setExercisesContext(data)
             } catch (err) {
@@ -73,13 +71,10 @@ export default function ExerciseList() {
         if (exerciseAddInfo.name == "" || exerciseAddInfo.musclePart == "" || exerciseAddInfo.type == "") return
 
         if (editExerciseIndex === null) {
-            console.log("Hello?", exerciseAddInfo)
 
             const created = await postExercise(exerciseAddInfo)
 
             setExercisesContext(prev=> [...prev, created.data])
-
-            console.log('returns what:'+ JSON.stringify(created))
 
             if (created.data) refetch()
         } else {
@@ -104,8 +99,17 @@ export default function ExerciseList() {
     
 
     function editExercise(index) {
+        // console.log('content', ...exercisesContext.filter(exercise => exercise.id === index))
+        
+        const currentValues = exercisesContext.filter(exercise => exercise.id === index)[0]
+        // console.log('content', currentValues)
         setEditExerciseIndex(index)
-        setExerciseAddInfo({name: exercisesContext[index].name, musclePart: exercisesContext[index].musclePart, type: exercisesContext[index].type})
+        setExerciseAddInfo({
+            name: currentValues.name,
+            musclePart: currentValues.musclePart,
+            type: currentValues.type
+        })
+        // setExerciseAddInfo({name: exercisesContext[index].name, musclePart: exercisesContext[index].musclePart, type: exercisesContext[index].type})
         setAppearModal(true)
     }
 
@@ -159,7 +163,7 @@ export default function ExerciseList() {
                                 <input value={exerciseAddInfo.musclePart} onChange={(e) => setExerciseAddInfo({...exerciseAddInfo, musclePart: e.target.value})} id="muscle-part" type="text" placeholder='Muscle part (eg. Chest, Back, etc.)'/>
                                 <label htmlFor="name">Type</label>
                                 <input value={exerciseAddInfo.type} onChange={(e) => setExerciseAddInfo({...exerciseAddInfo, type: e.target.value})} id="type" type="text" placeholder='Type (eg. Machine, Barbell)'/>
-                                <button type='submit' className='confirm-add' disabled={ JSON.stringify(exerciseAddInfo) === JSON.stringify(exercisesContext[editExerciseIndex]) || exerciseAddInfo.name == "" || exerciseAddInfo.musclePart == "" || exerciseAddInfo.type == ""} >{editExerciseIndex !== null ? 'Update Exercise' : "Add Exercise"}</button>
+                                <button type='submit' className='confirm-add'>{editExerciseIndex !== null ? 'Update Exercise' : "Add Exercise"}</button>
                                 <button type='button'  onClick={() => setAppearModal(false)}>Cancel</button>
                             </form>
                         </div>
@@ -179,7 +183,7 @@ export default function ExerciseList() {
                                 
                             </button>
                             <div className='actions'>
-                                        <button onClick={() => editExercise(i)}><FaRegEdit size={15}/></button>
+                                        <button onClick={() => editExercise(exercise.id)}><FaRegEdit size={15}/></button>
                                         <button onClick={() => deleteExercise(i)}><CgTrash color='rgb(211, 111, 111)' size={18}/></button>
                             </div>
                         </div>
