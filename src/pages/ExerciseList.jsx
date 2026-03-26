@@ -162,8 +162,8 @@ export default function ExerciseList() {
         <Header children={
             <>
                 {location.pathname === '/session/add-exercise' && <button  onClick={() => navigate(-1)} className='cancel-btn'><GoArrowLeft size={15}/></button>}
-                <input onChange={(e) => setSearchQuery(e.target.value)} value={searchQuery ? searchQuery : ""} disabled={setLoadingDialog} className="search-bar" type="text" placeholder="Search exercise, body part, muscle group..." />
-                <button onClick={() => setAppearModal(true)} className='add-exercise-btn' disabled={setLoadingDialog}><CgAddR/></button>
+                <input onChange={(e) => setSearchQuery(e.target.value)} value={searchQuery ? searchQuery : ""} disabled={loadingDialog} className="search-bar" type="text" placeholder="Search exercise, body part, muscle group..." />
+                <button onClick={() => setAppearModal(true)} className='add-exercise-btn' disabled={loadingDialog}><CgAddR/></button>
             </>
             
             }/>
