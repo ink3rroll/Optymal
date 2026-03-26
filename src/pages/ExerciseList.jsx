@@ -9,7 +9,7 @@ import { ExercisesContext } from '../contexts/Exercises'
 import { CgTrash } from 'react-icons/cg'
 import { FaRegEdit } from 'react-icons/fa'
 import useConfirm from '../hooks/Confirm'
-import { getExercises, postExercise } from '../api/apiExercises'
+import { getExercisesApi, postExerciseApi, editExerciseApi } from '../api/apiExercises'
 
 export default function ExerciseList() {
     const {exercisesContext, setExercisesContext} = useContext(ExercisesContext)
@@ -53,7 +53,7 @@ export default function ExerciseList() {
     async function refetch() {
         setLoadingDialog(true)
             try {
-                const data = await getExercises()
+                const data = await getExercisesApi()
 
                 setExercisesContext(data)
             } catch (err) {
@@ -72,15 +72,26 @@ export default function ExerciseList() {
 
         if (editExerciseIndex === null) {
 
-            const created = await postExercise(exerciseAddInfo)
+            const created = await postExerciseApi(exerciseAddInfo)
 
             setExercisesContext(prev=> [...prev, created.data])
 
             if (created.data) refetch()
         } else {
-            setExercisesContext(prev => 
+
+            const edited = await editExerciseApi(editExerciseIndex, {
+                newName: exerciseAddInfo.name,
+                newMusclePart: exerciseAddInfo.musclePart,
+                newType: exerciseAddInfo.type
+            })
+
+            if (edited.data) {
+                refetch()
+                setExercisesContext(prev => 
                 prev.map((item, i) => i === editExerciseIndex ? exerciseAddInfo : item)
             )
+            }
+            
         }
         
         setExerciseAddInfo({name: "", musclePart: "", type: ""})
