@@ -9,7 +9,7 @@ import { ExercisesContext } from '../contexts/Exercises'
 import { CgTrash } from 'react-icons/cg'
 import { FaRegEdit } from 'react-icons/fa'
 import useConfirm from '../hooks/Confirm'
-import { getExercisesApi, postExerciseApi, editExerciseApi } from '../api/apiExercises'
+import { getExercisesApi, postExerciseApi, editExerciseApi, deleteExerciseApi } from '../api/apiExercises'
 
 export default function ExerciseList() {
     const {exercisesContext, setExercisesContext} = useContext(ExercisesContext)
@@ -99,12 +99,18 @@ export default function ExerciseList() {
         setAppearModal(false)
     }
 
-    async function deleteExercise(index) {
+    async function deleteExercise(id) {
         const ok = await confirm("Are sure you want to delete this exercise? ")
 
         if (!ok) return
 
-        setExercisesContext(exercisesContext.filter((exercise, i) => i !== index))
+
+        const deleted = deleteExerciseApi(id)
+
+        if (deleted) {
+            setExercisesContext(exercisesContext.filter((exercise) => exercise.id !== id))
+        }
+        
     }
 
     
@@ -150,6 +156,7 @@ export default function ExerciseList() {
 
 
 
+
     return (
         <>
         <Header children={
@@ -174,7 +181,7 @@ export default function ExerciseList() {
                                 <input value={exerciseAddInfo.musclePart} onChange={(e) => setExerciseAddInfo({...exerciseAddInfo, musclePart: e.target.value})} id="muscle-part" type="text" placeholder='Muscle part (eg. Chest, Back, etc.)'/>
                                 <label htmlFor="name">Type</label>
                                 <input value={exerciseAddInfo.type} onChange={(e) => setExerciseAddInfo({...exerciseAddInfo, type: e.target.value})} id="type" type="text" placeholder='Type (eg. Machine, Barbell)'/>
-                                <button type='submit' className='confirm-add'>{editExerciseIndex !== null ? 'Update Exercise' : "Add Exercise"}</button>
+                                <button type='submit' className='confirm-add' disabled={ JSON.stringify({"id": editExerciseIndex, ...exerciseAddInfo}) === JSON.stringify(...exercisesContext.filter((ex) => ex.id === editExerciseIndex)) || exerciseAddInfo.name == "" || exerciseAddInfo.musclePart == "" || exerciseAddInfo.type == ""}>{editExerciseIndex !== null ? 'Update Exercise' : "Add Exercise"}</button>
                                 <button type='button'  onClick={() => setAppearModal(false)}>Cancel</button>
                             </form>
                         </div>
@@ -195,11 +202,11 @@ export default function ExerciseList() {
                             </button>
                             <div className='actions'>
                                         <button onClick={() => editExercise(exercise.id)}><FaRegEdit size={15}/></button>
-                                        <button onClick={() => deleteExercise(i)}><CgTrash color='rgb(211, 111, 111)' size={18}/></button>
+                                        <button onClick={() => deleteExercise(exercise.id)}><CgTrash color='rgb(211, 111, 111)' size={18}/></button>
                             </div>
                         </div>
                     )
-                }) : <div style={{ display: 'flex', textAlign: 'center', minHeight: '200px', alignItems: 'center', alignSelf: 'center' }}>{loadingDialog ? 'Loading data...' : "<button onClick={() => refetch()}>Retry</button>"} </div> : (
+                }) : <div style={{ display: 'flex', textAlign: 'center', minHeight: '200px', alignItems: 'center', alignSelf: 'center' }}>{loadingDialog ? 'Loading data...' : <button onClick={() => refetch()}>Retry</button>} </div> : (
                     filteredList.length > 0 ?
                     filteredList.map((exercise, i) => {
                     return (

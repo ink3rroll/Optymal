@@ -45,12 +45,31 @@ export const editExerciseApi = async (id, exerciseInfo) => {
 
         if (!res.ok) {
             throw new Error('Mali yan')
-            return
         } 
 
         const data = await res.json()
         return data
     } catch (err) {
         alert("Could not edit the exercise: "+ err.message)
+    }
+}
+
+export const deleteExerciseApi = async (id) => {
+    console.log("Deleting exercise: " + id)
+
+    try {
+        const res = await fetch(`${BASE_URL}/exercises/${id}`, {
+            method: 'DELETE',
+        })
+
+        if (!res.ok) {
+            throw new Error('Mali yan')
+        } 
+
+        const data = await res.json()
+
+        return data.message
+    } catch (err){
+        alert('Failed deletion: ' + err.message)
     }
 }
