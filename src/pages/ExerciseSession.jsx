@@ -23,7 +23,8 @@ function sessionReducer(state, action) {
                     sets: [
                         {
                             lbs: "",
-                            reps: ""
+                            reps: "",
+                            finished: false,
                         }
                     ]
                 }
