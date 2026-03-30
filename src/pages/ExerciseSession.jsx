@@ -9,6 +9,7 @@ import { CurrentSessionContext } from '../contexts/CurrentSession'
 import { LuMinimize2 } from 'react-icons/lu'
 import { Header } from '../components/Header'
 import { SessionHistoryContext } from '../contexts/SessionHistory'
+import { startCurrentSessionApi, editCurrentSessionApi } from '../api/apiExercises'
 
 function sessionReducer(state, action) {
     switch (action.type) {
@@ -115,8 +116,8 @@ export default function ExerciseSession() {
     const navigate = useNavigate()
     const { confirm, ConfirmDialog } = useConfirm()
     const [currentSession, dispatch] = useReducer(sessionReducer, [])
-    const {currentSessionContext, setCurrentSessionContext} = useContext(CurrentSessionContext)
-    const [currentTimer, setCurrentTimer] = useState(currentSessionContext.startTime ? Date.now() - currentSessionContext
+    const {currentSessionContext, setCurrentSessionContext, currentSessionLoading, fetchSession} = useContext(CurrentSessionContext)
+    const [currentTimer, setCurrentTimer] = useState(currentSessionContext?.startTime ? Date.now() - currentSessionContext
         .startTime : 0)
 
     function addSet(index) {
@@ -199,7 +200,7 @@ export default function ExerciseSession() {
     }
 
     async function handleSubmitSession() {
-        if (currentSessionContext.currentExercises === undefined || currentSessionContext.currentExercises.length === 0) return
+        if (currentSessionContext?.currentExercises === undefined || currentSessionContext?.currentExercises.length === 0) return
         const ok = await confirm("Are you sure you want to finish this workout?")
 
         if (!ok) return
@@ -209,37 +210,51 @@ export default function ExerciseSession() {
     }
 
     useEffect(() => {
-        setCurrentSessionContext({...currentSessionContext, currentExercises: currentSession})
+        console.log("Changed current exercises")
+        if (!currentSessionContext || currentSessionLoading) return
+        editCurrentSessionApi({...currentSessionContext, currentExercises: currentSession})
+        fetchSession()
     }, [currentSession])
 
 
     useEffect(() => {
-        if (currentSessionContext.startTime) return
-        setCurrentSessionContext({...currentSessionContext, startTime: Date.now()})
+        if (currentSessionContext?.startTime || currentSessionLoading) {
+            console.log("Current session ongoing: ", currentSessionContext)
+            return
+        }
+
+        async function startNewSession() {
+            const data = await startCurrentSessionApi()
+            setCurrentSessionContext(await data.data)
+        }
+        
+        startNewSession()
+        
     }, [])
 
     useEffect(() => {
-        if (!currentSessionContext.startTime) return
+        if (!currentSessionContext?.startTime) return
         let interval = null
 
         interval = setInterval(() => {
-            setCurrentTimer(Date.now() - currentSessionContext.startTime)
+            setCurrentTimer(Date.now() - currentSessionContext?.startTime)
         }, 1000)
-    }, [currentSessionContext.startTime])
+    }, [currentSessionContext?.startTime])
 
 
 
     useEffect(() => {
-        if (currentSessionContext.currentExercises) {
+        if (currentSessionContext?.currentExercises) {
                 dispatch({
                 type: "SET_SESSION",
                 payload: [
-                    ...currentSessionContext.currentExercises,
+                    ...currentSessionContext?.currentExercises,
                 ]
             })
         }
     
-    }, [])
+    }, [currentSessionLoading])
+
 
     
 
@@ -286,7 +301,7 @@ export default function ExerciseSession() {
                 
                 <button  className='add-exercise-btn' onClick={() => navigate("add-exercise")}>Add Exercise</button>
                 <div className='bottom-row'>
-                    <button className='finish-btn' onClick={() => handleSubmitSession()} disabled={currentSessionContext.currentExercises === undefined}>Finish Workout</button>
+                    <button className='finish-btn' onClick={() => handleSubmitSession()} disabled={currentSessionContext?.currentExercises === undefined}>Finish Workout</button>
                     <button onClick={() => handleDiscardSession()}>Discard Session</button>
                 </div>
             </div>

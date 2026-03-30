@@ -143,11 +143,6 @@ export default function ExerciseList() {
         })) 
     }, [searchQuery, exercisesContext])
 
-
-    // useEffect(() => {
-    //     setExercisesContext([...exercisesList])
-    // }, [exercisesList])
-
     useEffect(() => {
         if(appearModal) return
         setEditExerciseIndex(null)

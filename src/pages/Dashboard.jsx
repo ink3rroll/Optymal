@@ -4,17 +4,24 @@ import { Link } from "react-router-dom"
 import { CurrentSessionContext } from '../contexts/CurrentSession'
 
 export function Dashboard() {
-    const {currentSessionContext, setCurrentSessionContext} = useContext(CurrentSessionContext)
+    const {currentSessionContext, currentSessionLoading} = useContext(CurrentSessionContext)
+
+    if (currentSessionLoading) return "Loading data..."
     return (
+        <>
+
         <div className='dashboard-container'>
             <Link to="/session">
-                <button>{currentSessionContext.startTime ? "Continue Exercise" : "Start Exercise"}</button>
+                <button>{currentSessionContext?.startTime ? "Continue Exercise" : "Start Exercise"}</button>
             </Link>
 
-            {currentSessionContext.startTime === undefined && <Link to="/workout-templates">
+            {currentSessionContext?.startTime === undefined && <Link to="/workout-templates">
                 <button>Choose Workout Template</button>
             </Link>}    
             
         </div>
+        
+        </>
+        
     )
 }
